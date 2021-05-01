@@ -5,6 +5,9 @@
     grid-template-columns: repeat(auto-fill, minmax(142px, 1fr));
     grid-gap: 40px;
     justify-content: space-between;
+    @media screen and (max-width: 888px) {
+      grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+    }
   }
 }
 .teacher-card {
@@ -37,7 +40,7 @@
     margin-top: 14px;
   }
   &__name {
-    font-size: 20px;
+    font-size: 1.3rem;
     line-height: 26px;
     margin-bottom: 5px;
   }
@@ -56,7 +59,7 @@
   }
   &_without-img {
     .teacher-card__img-block {
-      height: 112px;
+      height: 120px;
       width: 112px;
     }
     .teacher-card__initials {

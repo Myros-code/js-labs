@@ -1,0 +1,20 @@
+.splide__arrow {
+  background: transparent;
+
+  svg {
+    height: 100px;
+    width: 70px;
+  }
+  &--next {
+    right: -2em;
+    @media screen and (max-width: 550px) {
+      right: -0.5em;
+    }
+  }
+  &--prev {
+    left: -2em;
+    @media screen and (max-width: 550px) {
+      left: -0.5em;
+    }
+  }
+}

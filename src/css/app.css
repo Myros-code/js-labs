@@ -4,9 +4,8 @@
 /* Reset and normalize */
 @import url('./normalize.css');
 
-/* Import owl caousel files */
-@import url('./vendors/owl.carousel.min.css');
-@import url('./vendors/owl.theme.default.min.css');
+/* Import splide caousel files */
+@import url("../../node_modules/@splidejs/splide/dist/css/splide.min.css");
 
 /* my styles */
 @import url('../scss/style.css');

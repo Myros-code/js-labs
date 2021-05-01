@@ -1,18 +1,13 @@
-const testModules = require('./test-module');
-require('../css/app.css');
+// --------------IMPORT SPLIDE CAROUSEL INIT FUNCTION ----------------------
+import splideCarousel from "./splide-carousel";
 
-require('./vendors/jquery.min');
-require('./vendors/owl.carousel.min');
+// --------------INITIALIZING SPLIDE CAROUSEL INIT FUNCTION ----------------------
+splideCarousel();
 
+// Include my css styles
+require("../css/app.css");
 
 /** ******** Your code here! *********** */
 
 // Include my scss styles
-require('../scss/style.scss');
-
-console.log(testModules.hello);
-
-
-$(document).ready(function(){
-    $(".owl-carousel").owlCarousel();
-});
+require("../scss/style.scss");

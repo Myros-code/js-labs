@@ -9,7 +9,16 @@
 @import "./blocks/teacherCards";
 @import "./blocks/statisticsTable";
 @import "./blocks/pagination";
+@import "./blocks/slider";
+@import "./blocks/popup";
+@import "./blocks/addTeacherForm";
 
+html {
+  font-size: 15px;
+  @media screen and (max-width: 620px) {
+    font-size: 13px;
+  }
+}
 body {
   color: $main-font-color;
   text-align: start;
@@ -24,6 +33,15 @@ body {
   margin: 0 auto;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Параметры тени */
+
+  @media screen and (max-width: 800px) {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  @media screen and (max-width: 550px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 //--------------------------------STYLES FOR LOGO------------------------------------------
@@ -31,18 +49,24 @@ body {
   &__link {
     text-decoration: none;
     color: #fafafa;
-    font-size: 40px;
+    font-size: 2.6rem;
+    font-family: "Times New Roman", Times, serif;
     text-shadow: black 1px 1px 0, #f86d5c -1px -1px 0, #f86d5c -1px 1px 0,
       black 1px -1px 0;
     font-weight: 700;
     letter-spacing: 2px;
+    transition: text-shadow 0.15s ease-in-out;
+    &:hover {
+      text-shadow: black 1px 1px 0, #f86d5c -2px -2px 0, #f86d5c -2px 2px 0,
+        black 2px -2px 0;
+    }
   }
 }
 //--------------------------------/STYLES FOR LOGO END------------------------------------------
 
 //--------------------------------STYLES FOR SEARCH GROUP------------------------------------------
 .search-group {
-  width: 290px;
+  width: 19.3rem;
   &__inner {
     @extend %flex-row;
   }
@@ -51,8 +75,9 @@ body {
 
 //--------------------------------STYLES FOR BTN------------------------------------------
 .btn {
+  white-space: nowrap;
   &_outline {
-    padding: 10px 20px;
+    padding: 0.6rem 1.3rem;
     background-color: transparent;
     outline: none;
     border: 1px solid;
@@ -79,10 +104,15 @@ body {
   }
 
   &_sm {
-    font-size: 13px;
+    font-size: 0.8rem;
   }
   &_md {
-    font-size: 20px;
+    font-size: 1.3rem;
+  }
+  &_lg {
+    font-size: 1.6rem;
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
 }
 //--------------------------------/STYLES FOR BTN END------------------------------------------
@@ -95,8 +125,8 @@ body {
     }
   }
   &_sm {
-    font-size: 13px;
-    padding: 10px 12px;
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
   }
 }
 //--------------------------------/STYLES FOR INPUT END------------------------------------------
@@ -104,27 +134,43 @@ body {
 //--------------------------------STYLES FOR NAV BLOCK------------------------------------------
 .nav-block {
   margin-top: $indent-lg;
+
   &__inner {
     @extend %flex-row;
+
+    @media screen and (max-width: 490px) {
+      flex-direction: column;
+      min-height: 75px;
+    }
+  }
+  @media screen and (max-width: 800px) {
+    margin-top: $indent-md;
   }
 }
 //--------------------------------/STYLES FOR NAV BLOCK END------------------------------------------
 
-.section{
-    padding-top: $indent-md;
-    padding-bottom: $indent-md;
-    &__styling-line-block{
-        margin: 0 auto;
-        max-width: 500px;
-        hr{
-            border-color: black;
-        }
+.section {
+  padding-top: $indent-md;
+  padding-bottom: $indent-md;
+  &__styling-line-block {
+    margin: 0 auto;
+    max-width: 500px;
+    hr {
+      border-color: black;
     }
-    &__title{
-        text-align: center;
-        font-size: 30px;
+  }
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+  }
+  &__content {
+    margin-top: $indent-md;
+  }
+  &-desc {
+    &__inner {
     }
-    &__content{
-        margin-top: $indent-md;
+    &__item {
+      margin-bottom: 20px;
     }
+  }
 }

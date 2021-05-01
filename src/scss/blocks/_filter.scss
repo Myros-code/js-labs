@@ -2,6 +2,9 @@
   &__inner {
     display: flex;
     align-items: center;
+    @media screen and (max-width: 475px) {
+      flex-direction: column;
+    }
   }
   &__checkbox-group {
     margin-left: 25px;
@@ -12,6 +15,10 @@
         color: #222222;
       }
     }
+    @media screen and (max-width: 475px) {
+      margin-left: 0;
+      margin-top: 10px;
+    }
   }
   &__checkbox {
   }
@@ -19,6 +26,9 @@
     color: #999999;
     margin-left: 5px;
     transition: color 0.3s ease-in;
+    @media screen and (max-width: 475px) {
+      margin-left: 0;
+    }
   }
 
   &__vertical-line {
@@ -26,5 +36,9 @@
     min-height: 22px;
     border-left: 3px dotted #999999;
     margin-left: 45px;
+
+    @media screen and (max-width: 475px) {
+      display: none;
+    }
   }
 }

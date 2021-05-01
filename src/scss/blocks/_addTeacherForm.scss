@@ -1,0 +1,45 @@
+.add-teacher-form {
+  &__fieldset {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 10px;
+    &_row {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  &__label {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+  &__input {
+    padding: 10px;
+    width: 100%;
+  }
+  &__select {
+    padding: 10px;
+    width: 100%;
+  }
+  &__radio {
+  }
+  &__legend {
+  }
+  &__add-btn-block {
+    margin-top: 40px;
+  }
+  &__add-btn {
+    width: 100%;
+  }
+  &__colorpicker-box {
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 5px;
+      width: 18px;
+    }
+  }
+  &__colorpicker {
+  }
+}
