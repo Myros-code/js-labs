@@ -1,0 +1,12 @@
+$main-font-color: #222222;
+$pink-color: #f75c49;
+$blue-color: #65a3be;
+$indent-lg: 58px;
+$indent-md: 36px;
+
+
+%flex-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

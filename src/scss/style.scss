@@ -1,0 +1,130 @@
+@import "./vars";
+@import "./mixins";
+
+// -------------- INCLUDE BLOCKS STYLES --------------------------
+@import "./blocks/header";
+@import "./blocks/nav";
+@import "./blocks/footer";
+@import "./blocks/filter";
+@import "./blocks/teacherCards";
+@import "./blocks/statisticsTable";
+@import "./blocks/pagination";
+
+body {
+  color: $main-font-color;
+  text-align: start;
+  background-color: #fcfcfc;
+  font-family: Roboto;
+}
+
+.wrapper {
+  max-width: 1200px;
+  padding-left: 100px;
+  padding-right: 100px;
+  margin: 0 auto;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Параметры тени */
+}
+
+//--------------------------------STYLES FOR LOGO------------------------------------------
+.logo {
+  &__link {
+    text-decoration: none;
+    color: #fafafa;
+    font-size: 40px;
+    text-shadow: black 1px 1px 0, #f86d5c -1px -1px 0, #f86d5c -1px 1px 0,
+      black 1px -1px 0;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+}
+//--------------------------------/STYLES FOR LOGO END------------------------------------------
+
+//--------------------------------STYLES FOR SEARCH GROUP------------------------------------------
+.search-group {
+  width: 290px;
+  &__inner {
+    @extend %flex-row;
+  }
+}
+//--------------------------------/STYLES FOR SEARCH GROUP END------------------------------------------
+
+//--------------------------------STYLES FOR BTN------------------------------------------
+.btn {
+  &_outline {
+    padding: 10px 20px;
+    background-color: transparent;
+    outline: none;
+    border: 1px solid;
+    transition: all 0.3s ease-in-out;
+    font-weight: 600;
+    &_red {
+      border-color: #f75c49;
+      color: #f75c49;
+    }
+
+    &:active {
+      outline: none;
+    }
+
+    &:focus {
+      background-color: #f75c49;
+      color: white;
+    }
+
+    &:hover {
+      background-color: #f75c49;
+      color: white;
+    }
+  }
+
+  &_sm {
+    font-size: 13px;
+  }
+  &_md {
+    font-size: 20px;
+  }
+}
+//--------------------------------/STYLES FOR BTN END------------------------------------------
+
+//--------------------------------STYLES FOR INPUT------------------------------------------
+.input {
+  outline: none;
+  &_outline {
+    &_black {
+    }
+  }
+  &_sm {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+}
+//--------------------------------/STYLES FOR INPUT END------------------------------------------
+
+//--------------------------------STYLES FOR NAV BLOCK------------------------------------------
+.nav-block {
+  margin-top: $indent-lg;
+  &__inner {
+    @extend %flex-row;
+  }
+}
+//--------------------------------/STYLES FOR NAV BLOCK END------------------------------------------
+
+.section{
+    padding-top: $indent-md;
+    padding-bottom: $indent-md;
+    &__styling-line-block{
+        margin: 0 auto;
+        max-width: 500px;
+        hr{
+            border-color: black;
+        }
+    }
+    &__title{
+        text-align: center;
+        font-size: 30px;
+    }
+    &__content{
+        margin-top: $indent-md;
+    }
+}

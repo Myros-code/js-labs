@@ -3,3 +3,13 @@
 
 /* Reset and normalize */
 @import url('./normalize.css');
+
+/* Import owl caousel files */
+@import url('./vendors/owl.carousel.min.css');
+@import url('./vendors/owl.theme.default.min.css');
+
+/* my styles */
+@import url('../scss/style.css');
+
+
+

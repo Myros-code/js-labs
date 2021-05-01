@@ -1,0 +1,12 @@
+header {
+}
+
+.header {
+  &__inner {
+    padding-top: $indent-md;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+}

@@ -1,0 +1,30 @@
+.filter {
+  &__inner {
+    display: flex;
+    align-items: center;
+  }
+  &__checkbox-group {
+    margin-left: 25px;
+    display: flex;
+    align-items: center;
+    &:hover {
+      .filter__label {
+        color: #222222;
+      }
+    }
+  }
+  &__checkbox {
+  }
+  &__label {
+    color: #999999;
+    margin-left: 5px;
+    transition: color 0.3s ease-in;
+  }
+
+  &__vertical-line {
+    width: 3px;
+    min-height: 22px;
+    border-left: 3px dotted #999999;
+    margin-left: 45px;
+  }
+}

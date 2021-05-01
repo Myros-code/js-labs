@@ -1,0 +1,83 @@
+.teachers-cards {
+  margin-top: 28px;
+  &__inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(142px, 1fr));
+    grid-gap: 40px;
+    justify-content: space-between;
+  }
+}
+.teacher-card {
+  margin: 0 auto;
+  max-width: 140px;
+  cursor: pointer;
+  &__inner {
+    text-align: center;
+  }
+  &__img-block {
+    margin: 0 auto;
+    max-height: 100%;
+    max-width: 112px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #f99589;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+  &__img {
+    max-height: 112px;
+    max-width: 112px;
+    object-fit: cover;
+    transition: transform 0.3s ease-out;
+  }
+  &__info {
+    max-width: 130px;
+    margin-top: 14px;
+  }
+  &__name {
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 5px;
+  }
+  &__location {
+    font-size: 10px;
+  }
+  &_favorite {
+    position: relative;
+    &__star-img {
+      width: 22px;
+      height: 22px;
+      position: absolute;
+      top: 5px;
+      right: 0;
+    }
+  }
+  &_without-img {
+    .teacher-card__img-block {
+      height: 112px;
+      width: 112px;
+    }
+    .teacher-card__initials {
+      color: $pink-color;
+      font-weight: 600;
+      font-size: 25px;
+      transition: all 0.2s ease-in;
+    }
+    &:hover {
+      .teacher-card__initials {
+        transform: scale(1.1);
+        color: #cc4836;
+      }
+    }
+  }
+  &:hover {
+    .teacher-card__img-block {
+      border-color: #cc4836;
+    }
+    .teacher-card__img {
+      transform: scale(1.1);
+    }
+  }
+}

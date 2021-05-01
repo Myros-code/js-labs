@@ -1,0 +1,15 @@
+.pagination {
+  margin-top: 25px;
+  margin-left: 12px;
+  &__inner {
+  }
+  &__item {
+    text-decoration: none;
+    color: $blue-color;
+    padding: 8px;
+    &:focus {
+      color: $main-font-color;
+      background-color: #fafafa;
+    }
+  }
+}
