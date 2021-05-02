@@ -11,9 +11,8 @@
 
   <body itemscope itemtype="http://schema.org/WebPage">
     <!-----------------------POPUP CONTAINER ----------------------->
-    <div class="popup-container popup--disable">
-
-      <div class="popup popup--disable popup_md">
+    <div class="popup-container">
+      <div class="popup popup_md" id="teacherInfo">
         <div class="popup__inner">
           <button class="popup__close-btn">
             <img src="./images/close.svg" alt="close" />
@@ -30,27 +29,24 @@
                     />
                   </div>
                   <div class="popup_teaher-info__data-block">
-                    <h3 class="popup_teaher-info__name">
-                      Mykyta Makeev
-                      <img
-                        src="./images/star.svg"
-                        alt="star"
-                        class="popup_teaher-info__star-img"
-                      />
-                    </h3>
+                    <h3 class="popup_teaher-info__name">Mykyta Makeev</h3>
                     <ul class="popup_teaher-info__data-list">
                       <li class="popup_teaher-info__data-list-item">
-                        <span>Kyiv</span>, <span>Ukraine</span>
+                        <span class="popup_teaher-info__city">Kyiv</span>,
+                        <span class="popup_teaher-info__country">Ukraine</span>
                       </li>
                       <li class="popup_teaher-info__data-list-item">
-                        <span>36</span>, <span>M</span>
+                        <span class="popup_teaher-info__age">36</span>,
+                        <span class="popup_teaher-info__gender">M</span>
                       </li>
                       <li class="popup_teaher-info__data-list-item">
-                        <a href="mailto:mykyta.makeev@domain.com" class="popup_teaher-info__email"
+                        <a
+                          href="mailto:mykyta.makeev@domain.com"
+                          class="popup_teaher-info__email"
                           >mykyta.makeev@domain.com</a
                         >
                       </li>
-                      <li>+380999910043</li>
+                      <li class="popup_teaher-info__phone">+380999910043</li>
                     </ul>
                   </div>
                 </div>
@@ -75,7 +71,7 @@
         </div>
       </div>
 
-      <div class="popup popup_sm popup--disable">
+      <div class="popup popup_sm" id="addTeacher">
         <div class="popup__inner">
           <button class="popup__close-btn">
             <img src="./images/close.svg" alt="close" />
@@ -230,7 +226,6 @@
           </div>
         </div>
       </div>
-
     </div>
     <!-----------------------/POPUP CONTAINER ----------------------->
 
@@ -271,7 +266,10 @@
             <a href="#" class="nav__item">Favorites</a>
             <a href="#" class="nav__item">About</a>
           </nav>
-          <button class="btn btn_md btn_outline btn_outline_red">
+          <button
+            class="btn btn_md btn_outline btn_outline_red popup-trigger"
+            data-popup="addTeacher"
+          >
             Add teacher
           </button>
         </div>
@@ -323,7 +321,10 @@
 
             <div class="teachers-cards">
               <div class="teachers-cards__inner">
-                <div class="teacher-card teacher-card_favorite">
+                <div
+                  class="teacher-card teacher-card_favorite popup-trigger"
+                  data-popup="teacherInfo"
+                >
                   <img
                     src="./images/star.svg"
                     alt="star"
@@ -345,7 +346,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="teacher-card teacher-card_without-img">
+                <div
+                  class="teacher-card teacher-card_without-img popup-trigger"
+                  data-popup="teacherInfo"
+                >
                   <div class="teacher-card__inner">
                     <div class="teacher-card__img-block">
                       <span class="teacher-card__initials">A.M</span>
@@ -356,7 +360,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="teacher-card">
+                <div
+                  class="teacher-card popup-trigger"
+                  data-popup="teacherInfo"
+                >
                   <div class="teacher-card__inner">
                     <div class="teacher-card__img-block">
                       <img
@@ -373,7 +380,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="teacher-card">
+                <div
+                  class="teacher-card popup-trigger"
+                  data-popup="teacherInfo"
+                >
                   <div class="teacher-card__inner">
                     <div class="teacher-card__img-block">
                       <img
@@ -390,7 +400,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="teacher-card">
+                <div
+                  class="teacher-card popup-trigger"
+                  data-popup="teacherInfo"
+                >
                   <div class="teacher-card__inner">
                     <div class="teacher-card__img-block">
                       <img
@@ -407,7 +420,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="teacher-card">
+                <div
+                  class="teacher-card popup-trigger"
+                  data-popup="teacherInfo"
+                >
                   <div class="teacher-card__inner">
                     <div class="teacher-card__img-block">
                       <img
@@ -424,7 +440,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="teacher-card">
+                <div
+                  class="teacher-card popup-trigger"
+                  data-popup="teacherInfo"
+                >
                   <div class="teacher-card__inner">
                     <div class="teacher-card__img-block">
                       <img
@@ -834,7 +853,10 @@
               <a href="#" class="nav__item">Favorites</a>
               <a href="#" class="nav__item">About</a>
             </nav>
-            <button class="btn btn_md btn_outline btn_outline_red">
+            <button
+              class="btn btn_md btn_outline btn_outline_red popup-trigger"
+              data-popup="addTeacher"
+            >
               Add teacher
             </button>
           </div>
@@ -844,5 +866,6 @@
       <!----------------------/FOOTER --------------------------------->
     </div>
     <script type="text/javascript" src="../build/js/app.js"></script>
+    <script type="text/javascript" src="./js/modal.js"></script>
   </body>
 </html>

@@ -1,5 +1,6 @@
 @import "./vars";
 @import "./mixins";
+@import "./animations";
 
 // -------------- INCLUDE BLOCKS STYLES --------------------------
 @import "./blocks/header";
@@ -24,6 +25,8 @@ body {
   text-align: start;
   background-color: #fcfcfc;
   font-family: Roboto;
+  overflow-x: hidden;
+  margin-right: calc(-1 * (100vw - 100%));
 }
 
 .wrapper {

@@ -1,19 +1,32 @@
 .popup {
   &-container {
+    display: none;
     position: fixed;
     width: 100vw;
     height: 100vh;
-    display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10;
     backdrop-filter: blur(5px);
+    &.open {
+      display: flex;
+      @media screen and (max-width: 700px) and (max-height: 920px) {
+        display: block;
+        padding-top: 40px;
+        padding-bottom: 40px;
+      }
+    }
+    @media screen and (max-width: 700px) and (max-height: 920px) {
+      & {
+        overflow: scroll;
+      }
+    }
   }
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   border: 1px solid;
-
   padding: 20px;
+  display: none;
 
   &__inner {
     position: relative;
@@ -27,6 +40,14 @@
     margin-top: 40px;
     padding-left: 50px;
     padding-right: 50px;
+    @media screen and (max-width: 800px) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    @media screen and (max-width: 400px) {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
   &__close-btn {
     right: 0;
@@ -45,19 +66,33 @@
     }
     &__block {
       display: flex;
-      align-items: flex-start;
+      @media screen and (max-width: 700px) {
+        flex-direction: column;
+      }
     }
     &__img-block {
       min-width: 320px;
       min-height: 320px;
+
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
+      @media screen and (max-width: 800px) {
+        min-width: 240px;
+        min-height: 240px;
+      }
+      @media screen and (max-width: 400px) {
+        min-width: 220px;
+        min-height: 220px;
+      }
     }
     &__data-block {
       margin-left: 45px;
+      @media screen and (max-width: 400px) {
+        margin-left: 0;
+      }
     }
     &__data-list {
       margin-top: 65px;
@@ -65,18 +100,37 @@
         font-size: 14px;
         margin-bottom: 25px;
       }
+      @media screen and (max-width: 700px) {
+        margin-top: 20px;
+      }
     }
     &__name {
       font-size: 36px;
+      @media screen and (max-width: 800px) {
+        font-size: 26px;
+      }
     }
     &_teacher-favorite {
       .popup_teaher-info__name {
+        &::after {
+          display: inline-block;
+          content: url("../../../src/images/star.svg");
+          width: 30px;
+          height: 30px;
+          margin-left: 70px;
+          @media screen and(max-width:1050px) {
+            margin-left: auto;
+          }
+        }
       }
       .popup_teaher-info__star-img {
         right: 0;
         width: 30px;
         height: 30px;
         margin-left: 70px;
+        @media screen and (max-width: 1050px) {
+          margin-left: 15px;
+        }
       }
     }
     &__comentar {
@@ -94,21 +148,57 @@
         margin-bottom: 10px;
       }
     }
-    &__email{
-        color: $blue-color;
-        text-decoration: none;
+    &__email {
+      color: $blue-color;
+      text-decoration: none;
     }
-  }
-  &--disable {
-    display: none;
   }
   &_sm {
     width: 405px;
+    @media screen and (max-width: 470px) {
+      width: 90%;
+    }
+    .popup__title {
+      @media screen and (max-height: 750px) {
+        margin-top: 0;
+      }
+      @media screen and (max-height: 660px) {
+        font-size: 22px;
+      }
+    }
+    .popup__content {
+      @media screen and (max-height: 750px) {
+        margin-top: 10px;
+      }
+    }
+    .add-teacher-form__add-btn-block {
+      @media screen and (max-height: 750px) {
+        margin-top: 15px;
+      }
+    }
+    .add-teacher-form__label {
+      @media screen and (max-height: 660px) {
+        font-size: 13px;
+      }
+    }
+    .add-teacher-form__input,
+    .add-teacher-form__select {
+      @media screen and (max-height: 660px) {
+        font-size: 13px;
+        padding: 8px;
+      }
+    }
   }
   &_md {
     width: 950px;
-    @media screen and (max-width:1000px) {
-        width: 80%;
+    @media screen and (max-width: 1000px) {
+      width: 90%;
+    }
+  }
+  &.open {
+    display: block;
+    @media screen and (max-width: 700px) and (max-height: 920px) {
+      margin: 0 auto;
     }
   }
 }
