@@ -1,5 +1,4 @@
 const modalInit = () => {
-  const popups = document.querySelectorAll(".popup");
   const popupContainer = document.querySelector(".popup-container");
   const popupTrigger = document.querySelectorAll(".popup-trigger");
   const body = document.querySelector("body");
@@ -46,10 +45,10 @@ const modalInit = () => {
             clousePopup(currentPopup, popupContainer);
           }
         });
-        
+
       }
     });
   });
   //-------- FUNCTION THAT LISTEN POPUP WINDOWS TRIGGER ENDED --------//
 };
-modalInit();
+export default modalInit;

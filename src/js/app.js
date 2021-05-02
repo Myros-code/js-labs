@@ -1,8 +1,10 @@
 // --------------IMPORT SPLIDE CAROUSEL INIT FUNCTION ----------------------
 import splideCarousel from "./splide-carousel";
+import modalInit from "./modal";
 
 // --------------INITIALIZING SPLIDE CAROUSEL INIT FUNCTION ----------------------
 splideCarousel();
+modalInit();
 
 // Include my css styles
 require("../css/app.css");
