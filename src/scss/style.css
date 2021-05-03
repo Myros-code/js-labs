@@ -429,7 +429,7 @@
 }
 
 .pagination__inner {
-  text-align: left;
+  float: left;
 }
 
 .pagination__item {
@@ -618,6 +618,7 @@
 .popup_teaher-info__data-list-item {
   font-size: 14px;
   margin-bottom: 25px;
+  text-align: left;
 }
 
 @media screen and (max-width: 700px) {
@@ -636,20 +637,6 @@
   }
 }
 
-.popup_teaher-info_teacher-favorite .popup_teaher-info__name::after {
-  display: inline-block;
-  content: url("../../../src/images/star.svg");
-  width: 30px;
-  height: 30px;
-  margin-left: 70px;
-}
-
-@media screen and (max-width: 1050px) {
-  .popup_teaher-info_teacher-favorite .popup_teaher-info__name::after {
-    margin-left: auto;
-  }
-}
-
 .popup_teaher-info_teacher-favorite .popup_teaher-info__star-img {
   right: 0;
   width: 30px;
@@ -665,6 +652,7 @@
 
 .popup_teaher-info__comentar {
   font-size: 14px;
+  text-align: left;
 }
 
 .popup_teaher-info__comentar-block {
@@ -681,6 +669,7 @@
 .popup_teaher-info__toggle-map-block {
   margin-top: 25px;
   margin-bottom: 10px;
+  text-align: left;
 }
 
 .popup_teaher-info__email {
@@ -775,6 +764,8 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -786,6 +777,7 @@
 .add-teacher-form__label {
   font-size: 15px;
   margin-bottom: 5px;
+  text-align: left;
 }
 
 .add-teacher-form__input {
@@ -822,6 +814,7 @@
 
 html {
   font-size: 15px;
+  scroll-behavior: smooth;
 }
 
 @media screen and (max-width: 620px) {

@@ -6,7 +6,6 @@ const modalInit = () => {
   //----------- FUNCTION FOR CLOUSING POPUP -------------//
   const clousePopup = (popup, container) => {
     body.style.overflowY = "auto";
-    console.log(document.body.clientWidth);
     popup.classList.add("slide-out-bck-center");
     setTimeout(() => {
       container.classList.remove("open");
@@ -17,7 +16,6 @@ const modalInit = () => {
 
   //----------- FUNCTION FOR OPENING POPUP -------------//
   const openPopup = (popup) => {
-    console.log(document.body.clientWidth);
     body.style.overflowY = "hidden";
     popup.classList.add("open");
     popup.classList.add("tilt-in-top-1");

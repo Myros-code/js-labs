@@ -99,6 +99,7 @@
       &-item {
         font-size: 14px;
         margin-bottom: 25px;
+        text-align: left;
       }
       @media screen and (max-width: 700px) {
         margin-top: 20px;
@@ -112,16 +113,6 @@
     }
     &_teacher-favorite {
       .popup_teaher-info__name {
-        &::after {
-          display: inline-block;
-          content: url("../../../src/images/star.svg");
-          width: 30px;
-          height: 30px;
-          margin-left: 70px;
-          @media screen and(max-width:1050px) {
-            margin-left: auto;
-          }
-        }
       }
       .popup_teaher-info__star-img {
         right: 0;
@@ -135,6 +126,7 @@
     }
     &__comentar {
       font-size: 14px;
+      text-align: left;
       &-block {
         margin-top: 35px;
       }
@@ -146,6 +138,7 @@
       &-block {
         margin-top: 25px;
         margin-bottom: 10px;
+        text-align: left;
       }
     }
     &__email {
