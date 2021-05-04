@@ -34,7 +34,7 @@ module.exports = [
     full_name: "Mary Silva",
     city: "",
     state: "Mecklenburg-Vorpommern",
-      // Kyrgyzstan
+    // Kyrgyzstan
     country: "Germany",
     postcode: 52640,
     coordinates: { latitude: "-42.1817", longitude: "-152.1685" },
@@ -115,6 +115,27 @@ module.exports = [
     picture_large: "https://randomuser.me/api/portraits/men/25.jpg",
     picture_thumbnail: "https://randomuser.me/api/portraits/thumb/men/25.jpg",
   },
+  {
+    id: 6,
+    favorite: true,
+    course: "math",
+    bg_color: "green",
+    note:
+      "this is a note for 5 user this is a note for 5 user this is a note for 1 user this is a note for 5 user this is a note for 5 user this is a note for 5 user this is a note for 5 user this is a note for 5 user",
+    gender: "female",
+    title: "Ms",
+    full_name: "AAAAAAAAAAAAAA Peck",
+    city: "San Francisco",
+    state: "Mecklenburg-Vorpommern",
+    country: "United States",
+    postcode: 52640,
+    coordinates: { latitude: "-42.1817", longitude: "-152.1685" },
+    timezone: { offset: "+9:30", description: "Adelaide, Darwin" },
+    email: "norbert.weishaupt@example.com",
+    b_date: "1956-12-23T19:09:19.602Z",
+    age: 31,
+    phone: "079-08291509",
+    picture_large: "https://randomuser.me/api/portraits/men/25.jpg",
+    picture_thumbnail: "https://randomuser.me/api/portraits/thumb/men/25.jpg",
+  },
 ];
-
-

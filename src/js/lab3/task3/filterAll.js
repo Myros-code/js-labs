@@ -8,41 +8,25 @@ export const filterAll = (
   let newArr = arr;
 
   if (country) {
-    // newArr = newArr.filter((el)=>{
-    //     return filterCountry(el, country);
-    // });
     newArr = filterUniversal(newArr, country, "country");
   }
-
   if (age) {
-    // newArr = newArr.filter((el)=>{
-    //     return filterAge(el, age);
-    // });
     newArr = filterUniversal(newArr, age, "age");
   }
+  if (gender) {
+    newArr = filterUniversal(newArr, gender, "gender");
+  }
+  if (favorite) {
+    newArr = filterUniversal(newArr, favorite, "favorite");
+  }
+
   return newArr;
 };
 
-const filterCountry = (obj, country) => {
-  if (obj.country === country) {
-    return true;
-  }
-};
-
-const filterAge = (obj, age) => {
-  if (obj.age === age) {
-    return true;
-  }
-};
-
 const filterUniversal = (arr, param, paramName) => {
-  
   return arr.filter((el) => {
-    console.log(el[paramName]);
     if (el[paramName] === param) {
-        return true;
-    } else {
-        console.log('no');
+      return true;
     }
   });
 };
