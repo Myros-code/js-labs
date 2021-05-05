@@ -19,14 +19,14 @@ export const validateStr = (data) => {
   if (typeof data !== "string") {
     console.log(`field ${data} is not STRING type`);
   } else if (isUpperCase(data.charAt(0)) === false) {
-    console.log(`the first letter field ${data} must be uppercase.`);
+    console.log(`the first letter field '${data}' must be uppercase.`);
   } else {
   }
 };
 
 export const validateNum = (data) => {
   if (typeof data !== "number") {
-    console.log(`field ${data} is not NUMBER type`);
+    console.log(`field '${data}' is not NUMBER type`);
   } else {
   }
 };
