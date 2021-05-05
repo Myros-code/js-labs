@@ -3,5 +3,5 @@ export const userStatistics = (arr, callback) => {
     let allUserProc =  100 / allUser;
     let currentUser = callback.length;
     let currentUserProc = allUserProc * currentUser;
-    return currentUserProc;
+    return `${currentUserProc.toFixed(1)}%`;
 }
