@@ -14,6 +14,15 @@
   margin: 0 auto;
   max-width: 140px;
   cursor: pointer;
+  position: relative;
+  .teacher-card_favorite__star-img {
+    visibility: hidden;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    top: 5px;
+    right: 0;
+  }
   &__inner {
     text-align: center;
   }
@@ -49,12 +58,8 @@
   }
   &_favorite {
     position: relative;
-    &__star-img {
-      width: 22px;
-      height: 22px;
-      position: absolute;
-      top: 5px;
-      right: 0;
+    .teacher-card_favorite__star-img {
+      visibility: visible;
     }
   }
   &_without-img {

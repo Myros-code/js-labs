@@ -1,9 +1,8 @@
 import Splide from "@splidejs/splide";
 
 const splideCarousel = () => {
-  document.addEventListener("DOMContentLoaded", function () {
     new Splide(".splide", {
-      type: "loop",
+      // type: "loop",
       perPage: 5,
       speed: 300,
       pagination: false,
@@ -20,7 +19,6 @@ const splideCarousel = () => {
       },
       perMove: 1,
     }).mount();
-  });
 };
 
 export default splideCarousel;

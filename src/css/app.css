@@ -4,6 +4,7 @@
 /* Reset and normalize */
 @import url('./normalize.css');
 
+
 /* Import splide caousel files */
 @import url("../../node_modules/@splidejs/splide/dist/css/splide.min.css");
 
