@@ -1,5 +1,6 @@
 const users = require("./lab3/users");
 
+
 module.exports = class Teachers {
   constructor() {
     this.favoriteTeachers = this.getFavTeachers();
@@ -107,6 +108,25 @@ module.exports = class Teachers {
             </div>
         </li>`;
         favTeachList.innerHTML += card;
+    });
+  }
+
+  renderStatistic(arr){
+    const statisticTable = document.querySelector(".statistics-table__body");
+    statisticTable.innerHTML = `<tr>
+    <th class="statistics-table__filter-toggles" data-sort="full_name">Name</th>
+    <th class="statistics-table__filter-toggles" data-sort="age">Age</th>
+    <th class="statistics-table__filter-toggles" data-sort="b_date">Birthday</th>
+    <th class="statistics-table__filter-toggles" data-sort="country">Country</th>
+    </tr>`;
+    arr.forEach((element) => {
+      let statisticItem = `<tr>
+      <td>${element['full_name']}</td>
+      <td>${element['age']}</td>
+      <td>${new Date(element['b_date'])}</td>
+      <td>${element['country']}</td>
+    </tr>`;
+    statisticTable.innerHTML += statisticItem;
     });
   }
 

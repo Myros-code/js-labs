@@ -274,13 +274,23 @@
           <div class="search-group">
             <div class="search-group__inner">
               <input
-                class="input input_sm"
+                class="input input_sm teacher-search"
                 type="text"
                 placeholder="Enter name to search"
+                id="teacherSearch"
               />
-              <button class="btn btn_sm btn_outline btn_outline_red">
+              <button class="btn btn_sm btn_outline btn_outline_red" id="searchBtn">
                 Search
               </button>
+
+              <ul class="search-group__list">
+                <!-- <li class="search-group__item"> 
+                  <a href="#!" class="search-group__link">
+                    Noach Devis, 32
+                  </a>
+                </li> -->
+              </ul>
+
             </div>
           </div>
           <!------/SEARCH ----->
@@ -353,6 +363,7 @@
                   <input
                     class="filter__checkbox"
                     type="text"
+                    value="all"
                     id="teacherFilter3"
                     name="teacherFilter3"
                   />
@@ -390,7 +401,8 @@
                     type="checkbox"
                     id="teacherFilter6"
                     name="teacherFilter6"
-                    value="favorites"
+                    value="Male"
+                    checked="true"
                     />
                   </div>
                   <div class="">
@@ -402,12 +414,14 @@
                     type="checkbox"
                     id="teacherFilter7"
                     name="teacherFilter7"
-                    value="favorites"
+                    value="Female"
+                    checked="true"
                     />
                   </div>
                 </div>
                 <div class="">
                   <button id="filterBtn">FILTER</button>
+                  <button id="filterRemBtn">REMOVE</button>
                 </div>
               </div>
             </div>
@@ -572,11 +586,12 @@
             <div class="statistics-table">
               <div class="statistics-table__inner">
                 <table class="statistics-table__item">
+                  <tbody class="statistics-table__body">
                   <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Nationality</th>
+                    <th class="statistics-table__filter-toggles" data-sort="full_name">Name</th>
+                    <th class="statistics-table__filter-toggles" data-sort="age">Age</th>
+                    <th class="statistics-table__filter-toggles" data-sort="b_date">Birthday</th>
+                    <th class="statistics-table__filter-toggles" data-sort="country">Country</th>
                   </tr>
                   <tr>
                     <td>Daisy Alexander</td>
@@ -632,6 +647,7 @@
                     <td>Female</td>
                     <td>USA</td>
                   </tr>
+                </tbody>
                 </table>
               </div>
             </div>

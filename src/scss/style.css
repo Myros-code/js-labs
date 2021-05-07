@@ -905,6 +905,41 @@ body {
   width: 19.3rem;
 }
 
+.search-group__inner {
+  position: relative;
+}
+
+.search-group__list {
+  background-color: transparent;
+  max-width: 100%;
+  width: 100%;
+  top: 100%;
+  position: absolute;
+  display: none;
+}
+
+.search-group__list.active {
+  display: block;
+}
+
+.search-group__item {
+  max-width: 100%;
+}
+
+.search-group__link {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #222;
+  border: 1px solid gray;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: white;
+  opacity: 0.9;
+}
+
 .btn {
   white-space: nowrap;
 }

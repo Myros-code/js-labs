@@ -11,6 +11,10 @@ const users = require("./lab3/users");
 import appendCards from './lab4/task1/appendCards';
 import Teachers from "./teachers";
 import Filter from "./lab4/task2/filter";
+import Sort from "./lab4/task3/sort";
+import { liveSearch } from "./lab4/task4/liveSearch";
+import Search from "./lab4/task4/search";
+
 
 
 // Include my css styles
@@ -34,6 +38,7 @@ require("../scss/style.scss");
 console.log(users);
 export const teachersPage = new Teachers();
 teachersPage.render();
+teachersPage.renderStatistic(users);
 teachersPage.renderFavorite();
 
 // modalInit(users);
@@ -43,3 +48,9 @@ export const info_teacher_popup = new infoPopup('teacherInfo');
 splideCarousel();
 
 const filter = new Filter();
+
+const mySort = new Sort();
+
+const mySearch = new Search();
+
+// liveSearch();
