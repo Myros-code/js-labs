@@ -1,4 +1,4 @@
-const users = require("../../lab3/users");
+const users = require("../../users");
 const FindList = require("./findList");
 
 module.exports = class Search {

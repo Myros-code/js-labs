@@ -1,5 +1,5 @@
 import { teachersPage, info_teacher_popup } from "../../app";
-const users = require("../../lab3/users");
+const users = require("../../users");
 
 module.exports = class Filter {
   constructor() {
@@ -83,12 +83,6 @@ module.exports = class Filter {
       }
     });
   }
-
-  // filterAge(arr, country){
-  //     return arr.filter((el) => {
-  //         return el["country"] === country;
-  //     });
-  // }
 
   getFilterUs() {
     return this.filterUsers;

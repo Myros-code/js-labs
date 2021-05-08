@@ -1,7 +1,7 @@
 import Popup from "./popups";
-import users from "./lab3/users";
+import users from "./users";
 import { teachersPage } from "./app";
-import splideCarousel from "./splide-carousel";
+import splideCarousel from "./vendors/splide-carousel";
 
 module.exports = class infoPopup extends Popup {
   constructor(id) {

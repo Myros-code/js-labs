@@ -22,17 +22,17 @@ require("../scss/style.scss");
 
 
 
-class App {
-    constructor(){
-        this.teachersPage = new Teachers();
-        this.popup = new Popup('addTeacher');
-        this.info_teacher_popup = new infoPopup('teacherInfo');
-        this.filter = new Filter();
-        this.mySort = new Sort();
-        this.mySearch = new Search();
-        splideCarousel();
-    }
-}
+// class App {
+//     constructor(){
+//         this.teachersPage = new Teachers();
+//         this.popup = new Popup('addTeacher');
+//         this.info_teacher_popup = new infoPopup('teacherInfo');
+//         this.filter = new Filter();
+//         this.mySort = new Sort();
+//         this.mySearch = new Search();
+//         splideCarousel();
+//     }
+// }
 
 
 
