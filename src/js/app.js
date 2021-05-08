@@ -1,8 +1,8 @@
 // --------------IMPORT SPLIDE CAROUSEL INIT FUNCTION ----------------------
 import splideCarousel from "./vendors/splide-carousel";
 // import modalInit from "./modal";
-import Popup from "./popups";
-import infoPopup from "./info-popup";
+import Popup from "./vendors/popups";
+import infoPopup from "./vendors/info-popup";
 
 
 const users = require("./users");
@@ -24,15 +24,24 @@ require("../scss/style.scss");
 
 class App {
     constructor(){
+        this.users = this.getUsers();
         this.teachersPage = new Teachers();
+        this.teachersPage.render();
+        this.teachersPage.renderStatistic(this.users);
+        this.teachersPage.renderFavorite();
         this.popup = new Popup('addTeacher');
-        this.info_teacher_popup = new infoPopup('teacherInfo');
-        this.filter = new Filter();
-        this.mySort = new Sort();
-        this.mySearch = new Search();
+        this.info_teacher_popup = new infoPopup('teacherInfo',this.teachersPage);
+        this.filter = new Filter(this.teachersPage, this.info_teacher_popup);
+        this.mySort = new Sort(this.teachersPage);
+        this.mySearch = new Search(this.info_teacher_popup, this.teachersPage);
         splideCarousel();
     }
+
+    getUsers(){
+        return users;
+    }
 }
+const app = new App();
 
 
 
@@ -43,23 +52,3 @@ class App {
 // --------------INITIALIZING SPLIDE CAROUSEL INIT FUNCTION ----------------------
 // --------------INITIALIZING MODAL INIT FUNCTION ----------------------
 
-
-
-export const teachersPage = new Teachers();
-teachersPage.render();
-teachersPage.renderStatistic(users);
-teachersPage.renderFavorite();
-
-// modalInit(users);
-const popup = new Popup('addTeacher');
-export const info_teacher_popup = new infoPopup('teacherInfo');
-
-splideCarousel();
-
-const filter = new Filter();
-
-const mySort = new Sort();
-
-const mySearch = new Search();
-
-// liveSearch();

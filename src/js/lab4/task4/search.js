@@ -2,19 +2,19 @@ const users = require("../../users");
 const FindList = require("./findList");
 
 module.exports = class Search {
-  constructor() {
+  constructor(info_popup, teachersPage) {
     this.findList = new FindList();
     this.searchField = document.querySelector("#teacherSearch");
-    this.init();
+    this.init(info_popup, teachersPage);
   }
 
-  init() {
+  init(info_popup, teachersPage) {
     this.searchField.oninput = () => {
       this.findList.listenFocus(this.searchField);
       this.findList.showList();
       this.findList.clearList();
       this.findSimilar(users);
-      this.listenClick();
+      this.listenClick(info_popup, teachersPage);
     };
   }
 
@@ -67,12 +67,26 @@ module.exports = class Search {
     }
   }
 
-  listenClick() {
+  listenClick(info_popup, teachersPage) {
     items = this.findList.getAllItems();
     items.forEach((element) => {
       element.addEventListener("click", (event) => {
+
+        info_popup.openContainer();
         let cardId = event.target.dataset.card;
-        document.getElementById(cardId).click();
+        let card = document.getElementById(cardId);
+        let elem = info_popup.getElem(cardId);
+
+        // see, if container open
+        if (info_popup.container.classList.contains("open")) {
+          info_popup.open();
+          info_popup.renderData(elem);
+          info_popup.checkFavorite(elem);
+          info_popup.favoriteBtn.onclick = () => {
+            info_popup.toggleFavorite(elem, card, teachersPage);
+          };
+        }
+
       });
     });
   }

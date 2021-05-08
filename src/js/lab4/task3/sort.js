@@ -1,9 +1,10 @@
-import { teachersPage } from "../../app";
+const users = require("../../users");
 
 module.exports = class Sort {
-  constructor() {
-    this.users = teachersPage.getTeachers();
+  constructor(teachersPage) {
+    this.users = users;
     this.filterToggle = this.getFilterToggle();
+    this.teachersPage = teachersPage;
     this.init();
   }
 
@@ -11,17 +12,16 @@ module.exports = class Sort {
     this.filterToggle = this.getFilterToggle();
     this.filterToggle.forEach((el) => {
       el.addEventListener("click", (event) => {
-        console.log(event);
         let sortValue = event.target.dataset.sort;
         let sortArr = this.sort(sortValue);
-        teachersPage.renderStatistic(sortArr);
+        this.teachersPage.renderStatistic(sortArr);
         this.init();
       });
     });
   }
 
   sort(value) {
-    this.users = teachersPage.getTeachers();
+    this.users = users;
     let sortUsers = this.users.slice();
 
     return sortUsers.sort(function (a, b) {

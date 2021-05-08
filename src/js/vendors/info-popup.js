@@ -1,10 +1,9 @@
 import Popup from "./popups";
-import users from "./users";
-import { teachersPage } from "./app";
-import splideCarousel from "./vendors/splide-carousel";
+import users from "../users";
+import splideCarousel from "./splide-carousel";
 
 module.exports = class infoPopup extends Popup {
-  constructor(id) {
+  constructor(id, teachersPage) {
     super(id);
     this.teacherImg = document.querySelector("#pTeacherImg");
     this.teacherName = document.querySelector("#pTeacherName");
@@ -16,6 +15,7 @@ module.exports = class infoPopup extends Popup {
     this.teacherAge = document.querySelector("#pTeacherAge");
     this.teacherComent = document.querySelector("#pTeacherComent");
     this.favoriteBtn = document.querySelector("#toggleFav");
+    this.listen(teachersPage);
 
 
     // clouse on click "clouse button"
@@ -33,7 +33,6 @@ module.exports = class infoPopup extends Popup {
   }
 
   renderData(elem) {
-      
     this.teacherName.innerHTML = elem["full_name"];
     this.teacherImg.src = elem["picture_large"];
     this.teacherCity.innerHTML = elem["city"];
@@ -45,15 +44,13 @@ module.exports = class infoPopup extends Popup {
     this.teacherMail.innerHTML = elem["email"];
   }
 
-  listen() {
+  listen(teachersPage) {
     // foreach for all popup triggers
     this.trigers = this.getTriggers();
     this.trigers.forEach((el) => {
       // even trigger listen "click event"
       el.addEventListener("click", (event) => {
-        // open container
-        this.container.classList.add("open");
-
+        this.openContainer();
         let card = event.target.closest(".popup-trigger");
         let cardId = card.id;
         let elem = this.getElem(cardId);
@@ -63,13 +60,17 @@ module.exports = class infoPopup extends Popup {
           this.open();
           this.renderData(elem);
           this.checkFavorite(elem);
-
           this.favoriteBtn.onclick = () => {
-            this.toggleFavorite(elem, card);
+            this.toggleFavorite(elem, card, teachersPage);
           };
         }
       });
+
     });
+  }
+
+  openContainer(){
+    this.container.classList.add("open");
   }
 
   getElem(cardId) {
@@ -78,7 +79,7 @@ module.exports = class infoPopup extends Popup {
     });
   }
 
-  toggleFavorite(elem, card) {
+  toggleFavorite(elem, card, teachersPage) {
     if (elem["favorite"] === true) {
       elem["favorite"] = false;
       this.popup.classList.remove("popup_teaher-info_teacher-favorite");
@@ -99,4 +100,5 @@ module.exports = class infoPopup extends Popup {
       this.popup.classList.remove("popup_teaher-info_teacher-favorite");
     }
   }
+
 };

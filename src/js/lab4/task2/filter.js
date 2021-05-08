@@ -1,33 +1,25 @@
-import { teachersPage, info_teacher_popup } from "../../app";
 const users = require("../../users");
 
 module.exports = class Filter {
-  constructor() {
+  constructor(teachersPage, info_teacher_popup) {
     this.favFilter = document.querySelector("#teacherFilter2");
+    this.users = this.getUsers();
     this.countryFilter = document.querySelector("#teacherFilter3");
-    this.filterUsers = users;
+    this.filterUsers = this.getUsers();
     this.ageFilterMin = document.querySelector("#teacherFilter4");
     this.ageFilterMax = document.querySelector("#teacherFilter5");
     this.genderFilterMale = document.querySelector("#teacherFilter6");
     this.genderFilterFemale = document.querySelector("#teacherFilter7");
     this.remFilterBtn = document.querySelector("#filterRemBtn"); 
     this.filterBtn = document.querySelector("#filterBtn");
-    this.filterBtn.addEventListener("click", () => {
-      this.filter();
-      teachersPage.renderFilter(this.filterUsers);
-      info_teacher_popup.listen();
-    });
-    this.remFilterBtn.addEventListener("click", () => {
-        teachersPage.renderFilter(users);
-        info_teacher_popup.listen();
-    }); 
+    this.clickListener(teachersPage, info_teacher_popup);
   }
 
   filter() {
     if (this.favFilter.checked) {
-      this.filterUsers = this.filterFavorites(this.filterUsers);
+      this.filterUsers = this.filterFavorites(this.getUsers());
     } else {
-      this.filterUsers = users;
+      this.filterUsers = this.getUsers();
     }
 
     this.filterUsers = this.filterCounties(
@@ -46,6 +38,12 @@ module.exports = class Filter {
       this.genderFilterMale.checked,
       this.genderFilterFemale.checked
     );
+
+    console.log('users:');
+    console.log(users);
+
+    console.log('filter:');
+    console.log(this.filterUsers);
   }
 
   filterFavorites(arr) {
@@ -87,4 +85,24 @@ module.exports = class Filter {
   getFilterUs() {
     return this.filterUsers;
   }
+
+  clickListener(teachersPage, info_teacher_popup){
+
+    this.filterBtn.addEventListener("click", () => {
+      this.filter();
+      teachersPage.renderFilter(this.filterUsers);
+      info_teacher_popup.listen(teachersPage);
+    });
+
+    this.remFilterBtn.addEventListener("click", () => {
+        teachersPage.renderFilter(this.users);
+        info_teacher_popup.listen(teachersPage);
+    }); 
+
+  }
+
+  getUsers(){
+    return users;
+  }
+
 };
