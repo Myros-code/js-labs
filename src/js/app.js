@@ -33,7 +33,7 @@ class App {
         this.info_teacher_popup = new infoPopup('teacherInfo',this.teachersPage);
         this.filter = new Filter(this.teachersPage, this.info_teacher_popup);
         this.mySort = new Sort(this.teachersPage);
-        this.mySearch = new Search(this.info_teacher_popup, this.teachersPage);
+        this.mySearch = new Search(this.info_teacher_popup, this.teachersPage,this.filter);
         splideCarousel();
     }
 

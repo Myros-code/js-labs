@@ -2,19 +2,22 @@ const users = require("../../users");
 const FindList = require("./findList");
 
 module.exports = class Search {
-  constructor(info_popup, teachersPage) {
+  constructor(info_popup, teachersPage, filter) {
     this.findList = new FindList();
+    this.info_popup = info_popup;
+    this.teachersPage = teachersPage;
+    this.filter = filter;
     this.searchField = document.querySelector("#teacherSearch");
-    this.init(info_popup, teachersPage);
+    this.init();
   }
 
-  init(info_popup, teachersPage) {
+  init() {
     this.searchField.oninput = () => {
       this.findList.listenFocus(this.searchField);
       this.findList.showList();
       this.findList.clearList();
       this.findSimilar(users);
-      this.listenClick(info_popup, teachersPage);
+      this.listenClick();
     };
   }
 
@@ -67,24 +70,28 @@ module.exports = class Search {
     }
   }
 
-  listenClick(info_popup, teachersPage) {
+  listenClick() {
     items = this.findList.getAllItems();
     items.forEach((element) => {
       element.addEventListener("click", (event) => {
 
-        info_popup.openContainer();
+        this.info_popup.openContainer();
         let cardId = event.target.dataset.card;
-        let card = document.getElementById(cardId);
-        let elem = info_popup.getElem(cardId);
+        let elem = this.info_popup.getElem(cardId);
 
         // see, if container open
-        if (info_popup.container.classList.contains("open")) {
-          info_popup.open();
-          info_popup.renderData(elem);
-          info_popup.checkFavorite(elem);
-          info_popup.favoriteBtn.onclick = () => {
-            info_popup.toggleFavorite(elem, card, teachersPage);
+        if (this.info_popup.container.classList.contains("open")) {
+          this.info_popup.open();
+          this.info_popup.renderData(elem);
+          this.info_popup.checkFavorite(elem);
+
+          this.info_popup.favoriteBtn.onclick = () => {
+            this.info_popup.toggleFavorite(elem, this.teachersPage);
+            this.filter.filter();
+            this.teachersPage.renderFilter(this.filter.filterUsers);
+            this.info_popup.listen(this.teachersPage);
           };
+
         }
 
       });

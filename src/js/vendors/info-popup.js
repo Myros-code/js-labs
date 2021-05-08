@@ -61,7 +61,8 @@ module.exports = class infoPopup extends Popup {
           this.renderData(elem);
           this.checkFavorite(elem);
           this.favoriteBtn.onclick = () => {
-            this.toggleFavorite(elem, card, teachersPage);
+            this.toggleFavorite(elem, teachersPage);
+            this.checkCardFavorite(elem);
           };
         }
       });
@@ -79,15 +80,13 @@ module.exports = class infoPopup extends Popup {
     });
   }
 
-  toggleFavorite(elem, card, teachersPage) {
+  toggleFavorite(elem, teachersPage) {
     if (elem["favorite"] === true) {
       elem["favorite"] = false;
       this.popup.classList.remove("popup_teaher-info_teacher-favorite");
-      card.classList.remove("teacher-card_favorite");
     } else {
       elem["favorite"] = true;
       this.popup.classList.add("popup_teaher-info_teacher-favorite");
-      card.classList.add("teacher-card_favorite");
     }
     teachersPage.renderFavorite();
     splideCarousel();
@@ -99,6 +98,16 @@ module.exports = class infoPopup extends Popup {
     } else {
       this.popup.classList.remove("popup_teaher-info_teacher-favorite");
     }
+  }
+
+  checkCardFavorite(elem){
+    let card = document.getElementById(elem['id']);
+    if (elem["favorite"] === true){
+      card.classList.add('teacher-card_favorite');
+    } else {
+      card.classList.remove('teacher-card_favorite');
+    }
+    
   }
 
 };

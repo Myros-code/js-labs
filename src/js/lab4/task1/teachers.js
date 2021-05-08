@@ -84,7 +84,7 @@ module.exports = class Teachers {
     favTeachersArr.forEach((element) => {
         let card = `
         <li class="splide__slide">
-            <div class="teacher-card teacher-card_favorite">
+            <div class="teacher-card ${this.checkFavorite(element)}">
                 <img
                     src="./images/star.svg"
                     alt="star"
@@ -123,7 +123,7 @@ module.exports = class Teachers {
       let statisticItem = `<tr>
       <td>${element['full_name']}</td>
       <td>${element['age']}</td>
-      <td>${new Date(element['b_date'])}</td>
+      <td>${this.getBirthday(new Date(element['b_date']))}</td>
       <td>${element['country']}</td>
     </tr>`;
     statisticTable.innerHTML += statisticItem;
@@ -146,6 +146,10 @@ module.exports = class Teachers {
     return users.filter((el) => {
         return el['favorite'] === true;
     });
+  }
+
+  getBirthday(date){
+    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
   }
   
 };

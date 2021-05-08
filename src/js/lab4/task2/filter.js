@@ -13,6 +13,8 @@ module.exports = class Filter {
     this.remFilterBtn = document.querySelector("#filterRemBtn"); 
     this.filterBtn = document.querySelector("#filterBtn");
     this.clickListener(teachersPage, info_teacher_popup);
+    this.teachersPage = teachersPage;
+    this.info_teacher_popup = info_teacher_popup;
   }
 
   filter() {
@@ -86,17 +88,18 @@ module.exports = class Filter {
     return this.filterUsers;
   }
 
-  clickListener(teachersPage, info_teacher_popup){
+  clickListener(){
 
     this.filterBtn.addEventListener("click", () => {
       this.filter();
-      teachersPage.renderFilter(this.filterUsers);
-      info_teacher_popup.listen(teachersPage);
+      this.teachersPage.renderFilter(this.filterUsers);
+      this.info_teacher_popup.listen(this.teachersPage);
     });
 
     this.remFilterBtn.addEventListener("click", () => {
-        teachersPage.renderFilter(this.users);
-        info_teacher_popup.listen(teachersPage);
+      this.favFilter.checked = false;
+      this.teachersPage.renderFilter(this.users);
+      this.info_teacher_popup.listen(this.teachersPage);
     }); 
 
   }
