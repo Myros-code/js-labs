@@ -1,5 +1,6 @@
 import Popup from "./popups";
 import users from "../users";
+import userImg from "../../images/user.png";
 import splideCarousel from "./splide-carousel";
 
 module.exports = class infoPopup extends Popup {
@@ -100,7 +101,7 @@ module.exports = class infoPopup extends Popup {
 
   checkImg(elem) {
     if (!("picture_large" in elem) && !("picture_thumbnail" in elem)) {
-      this.teacherImg.src = "/src/images/user.png";
+      this.teacherImg.src = userImg;
     } else {
       this.teacherImg.src = elem["picture_large"]
         ? elem["picture_large"]
