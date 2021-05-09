@@ -930,6 +930,7 @@ body {
 }
 
 .search-group__link {
+  text-align: left;
   display: block;
   padding: 10px;
   text-decoration: none;
