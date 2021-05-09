@@ -35,7 +35,7 @@ module.exports = class Search {
     });
   }
 
-  createItem(element,str) {
+  createItem(element, str) {
     return `
     <li class="search-group__item" > 
         <a href="#!" class="search-group__link" data-card="${element["id"]}">
@@ -60,13 +60,25 @@ module.exports = class Search {
   searchFindStr(element) {
     if (element["full_name"].search(this.getValue()) !== -1) {
       let str = element["full_name"];
-      return `${this.insertMark(str, str.search(this.getValue()),this.getValue().length)}, ${element["age"]}, ${element["note"]}`;
+      return `${this.insertMark(
+        str,
+        str.search(this.getValue()),
+        this.getValue().length
+      )}, ${element["age"]}, ${element["note"]}`;
     } else if (element["age"].toString().search(this.getValue()) !== -1) {
       let str = element["age"].toString();
-      return `${element["full_name"]}, ${this.insertMark(str, str.search(this.getValue()), this.getValue().length)}, ${element["note"]}`;
+      return `${element["full_name"]}, ${this.insertMark(
+        str,
+        str.search(this.getValue()),
+        this.getValue().length
+      )}, ${element["note"]}`;
     } else {
       let str = element["note"];
-      return `${element["full_name"]}, ${element["age"]}, ${this.insertMark(str, str.search(this.getValue()), this.getValue().length)}`;
+      return `${element["full_name"]}, ${element["age"]}, ${this.insertMark(
+        str,
+        str.search(this.getValue()),
+        this.getValue().length
+      )}`;
     }
   }
 
@@ -74,7 +86,6 @@ module.exports = class Search {
     items = this.findList.getAllItems();
     items.forEach((element) => {
       element.addEventListener("click", (event) => {
-
         this.info_popup.openContainer();
         let cardId = event.target.dataset.card;
         let elem = this.info_popup.getElem(cardId);
@@ -91,9 +102,7 @@ module.exports = class Search {
             this.teachersPage.renderFilter(this.filter.filterUsers);
             this.info_popup.listen(this.teachersPage);
           };
-
         }
-
       });
     });
   }

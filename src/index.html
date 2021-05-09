@@ -121,6 +121,7 @@
                   id="teacherName"
                   placeholder="Enter name"
                   class="add-teacher-form__input"
+                  required
                 />
               </fieldset>
               <!----------------/TEACHER NAME INPUT BLOCK  ------------------->
@@ -130,7 +131,7 @@
                 <label class="add-teacher-form__label" for="teacherCountry"
                   >Country</label
                 >
-                <select class="add-teacher-form__select">
+                <select class="add-teacher-form__select" id="teacherCountry">
                   <option>Ukraine</option>
                   <option>Пункт 2</option>
                 </select>
@@ -147,6 +148,7 @@
                   name="city"
                   id="teacherCity"
                   class="add-teacher-form__input"
+                  required
                 />
               </fieldset>
               <!----------------/TEACHER CITY INPUT BLOCK  ------------------->
@@ -162,6 +164,7 @@
                   id="teacherNumber"
                   placeholder="+1234567890"
                   class="add-teacher-form__input"
+                  required
                 />
               </fieldset>
               <!----------------/TEACHER NUMBER INPUT BLOCK  ------------------->
@@ -177,6 +180,7 @@
                   id="teacherEmail"
                   placeholder="myEmail@company.com"
                   class="add-teacher-form__input"
+                  required
                 />
               </fieldset>
               <!----------------/TEACHER EMAIL INPUT BLOCK  ------------------->
@@ -184,13 +188,14 @@
               <!----------------TEACHER DATE OF BIRTH INPUT BLOCK  ------------------->
               <fieldset class="add-teacher-form__fieldset">
                 <label class="add-teacher-form__label" for="teacherDateBirth"
-                  >Age</label
+                  >Date of birth</label
                 >
                 <input
-                  type="number"
+                  type="date"
                   name="dateBirth"
                   id="teacherDateBirth"
                   class="add-teacher-form__input"
+                  required
                 />
               </fieldset>
               <!----------------/TEACHER DATE OF BIRTH INPUT BLOCK  ------------------->
@@ -220,6 +225,7 @@
                     name="gender"
                     id="teacherGenderFemale"
                     class="add-teacher-form__radio"
+                    checked
                   />
                 </div>
               </fieldset>
@@ -248,6 +254,7 @@
               <div class="add-teacher-form__add-btn-block">
                 <button
                   class="btn btn_outline btn_outline_red btn_lg add-teacher-form__add-btn"
+                  id="addTeaherBtn"
                 >
                   Add
                 </button>

@@ -1,6 +1,5 @@
 const users = require("../../users");
 
-
 module.exports = class Teachers {
   constructor() {
     this.favoriteTeachers = this.getFavTeachers();
@@ -8,11 +7,12 @@ module.exports = class Teachers {
 
   render() {
     const cardContainer = document.querySelector(".teachers-cards__inner");
+    cardContainer.innerHTML = "";
     users.forEach((element) => {
       let card = `<div
-    class="teacher-card ${this.checkFavorite(element)} popup-trigger" id="${
-        element["id"]
-      }"
+    class="teacher-card ${this.checkFavorite(element)} ${this.checkImgClass(
+        element
+      )} popup-trigger" id="${element["id"]}"
     data-popup="teacherInfo"
   >
     <img
@@ -22,13 +22,7 @@ module.exports = class Teachers {
     />
     <div class="teacher-card__inner">
       <div class="teacher-card__img-block">
-        <img
-          src='${element["picture_large"]}'
-          height="200"
-          width="auto"
-          alt="teacher"
-          class="teacher-card__img"
-        />
+        ${this.checkImgPhoto(element)}
       </div>
       <div class="teacher-card__info">
         <h2 class="teacher-card__name">${element["full_name"]}</h2>
@@ -41,14 +35,14 @@ module.exports = class Teachers {
     });
   }
 
-  renderFilter(arr){
+  renderFilter(arr) {
     const cardContainer = document.querySelector(".teachers-cards__inner");
     cardContainer.innerHTML = "";
     arr.forEach((element) => {
-        let card = `<div
-      class="teacher-card ${this.checkFavorite(element)} popup-trigger" id="${
-          element["id"]
-        }"
+      let card = `<div
+      class="teacher-card ${this.checkFavorite(element)} ${this.checkImgClass(
+        element
+      )} popup-trigger" id="${element["id"]}"
       data-popup="teacherInfo"
     >
       <img
@@ -58,13 +52,7 @@ module.exports = class Teachers {
       />
       <div class="teacher-card__inner">
         <div class="teacher-card__img-block">
-          <img
-            src='${element["picture_large"]}'
-            height="200"
-            width="auto"
-            alt="teacher"
-            class="teacher-card__img"
-          />
+          ${this.checkImgPhoto(element)}
         </div>
         <div class="teacher-card__info">
           <h2 class="teacher-card__name">${element["full_name"]}</h2>
@@ -73,45 +61,39 @@ module.exports = class Teachers {
       </div>
     </div>
     `;
-        cardContainer.innerHTML += card;
+      cardContainer.innerHTML += card;
     });
-  } 
+  }
 
-  renderFavorite(){
+  renderFavorite() {
     const favTeachList = document.querySelector("#favTeachers");
     const favTeachersArr = this.getFavTeachers();
     favTeachList.innerHTML = "";
     favTeachersArr.forEach((element) => {
-        let card = `
+      let card = `
         <li class="splide__slide">
-            <div class="teacher-card ${this.checkFavorite(element)}">
-                <img
-                    src="./images/star.svg"
-                    alt="star"
-                    class="teacher-card_favorite__star-img"
-                />
+            <div class="teacher-card ${this.checkFavorite(
+              element
+            )} ${this.checkImgClass(element)}" data-card="${element["id"]}">
+                <img src="./images/star.svg" alt="star" class="teacher-card_favorite__star-img"/>
                 <div class="teacher-card__inner">
                     <div class="teacher-card__img-block">
-                        <img
-                            src="${element["picture_large"]}"
-                            height="200"
-                            width="auto"
-                            alt="teacher"
-                            class="teacher-card__img"
-                        />
+                      ${this.checkImgPhoto(element)}
                     </div>
                     <div class="teacher-card__info">
                     <h2 class="teacher-card__name">${element["full_name"]}</h2>
-                    <span class="teacher-card__location">${element["country"]}</span>
+                    <span class="teacher-card__location">${
+                      element["country"]
+                    }</span>
                     </div>
                 </div>
             </div>
         </li>`;
-        favTeachList.innerHTML += card;
+      favTeachList.innerHTML += card;
     });
   }
 
-  renderStatistic(arr){
+  renderStatistic(arr) {
     const statisticTable = document.querySelector(".statistics-table__body");
     statisticTable.innerHTML = `<tr>
     <th class="statistics-table__filter-toggles" data-sort="full_name">Name</th>
@@ -121,12 +103,12 @@ module.exports = class Teachers {
     </tr>`;
     arr.forEach((element) => {
       let statisticItem = `<tr>
-      <td>${element['full_name']}</td>
-      <td>${element['age']}</td>
-      <td>${this.getBirthday(new Date(element['b_date']))}</td>
-      <td>${element['country']}</td>
+      <td>${element["full_name"]}</td>
+      <td>${element["age"]}</td>
+      <td>${this.getBirthday(new Date(element["b_date"]))}</td>
+      <td>${element["country"]}</td>
     </tr>`;
-    statisticTable.innerHTML += statisticItem;
+      statisticTable.innerHTML += statisticItem;
     });
   }
 
@@ -142,14 +124,39 @@ module.exports = class Teachers {
     }
   }
 
+  checkImgClass(element) {
+    if (!("picture_large" in element) && !("picture_thumbnail" in element)) {
+      return "teacher-card_without-img";
+    } else {
+      return "";
+    }
+  }
+
+  checkImgPhoto(element) {
+    if (!("picture_large" in element) && !("picture_thumbnail" in element)) {
+      return `<span class="teacher-card__initials">${element["full_name"]}</span>`;
+    } else {
+      return `<img
+          src='${
+            element["picture_large"]
+              ? element["picture_large"]
+              : element["picture_thumbnail"]
+          }'
+          height="200"
+          width="auto"
+          alt="teacher"
+          class="teacher-card__img"
+        />`;
+    }
+  }
+
   getFavTeachers() {
     return users.filter((el) => {
-        return el['favorite'] === true;
+      return el["favorite"] === true;
     });
   }
 
-  getBirthday(date){
+  getBirthday(date) {
     return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
   }
-  
 };

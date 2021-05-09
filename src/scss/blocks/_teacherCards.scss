@@ -52,6 +52,9 @@
     font-size: 1.3rem;
     line-height: 26px;
     margin-bottom: 5px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &__location {
     font-size: 10px;
@@ -70,7 +73,7 @@
     .teacher-card__initials {
       color: $pink-color;
       font-weight: 600;
-      font-size: 25px;
+      font-size: 14px;
       transition: all 0.2s ease-in;
     }
     &:hover {

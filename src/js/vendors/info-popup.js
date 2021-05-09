@@ -15,26 +15,25 @@ module.exports = class infoPopup extends Popup {
     this.teacherAge = document.querySelector("#pTeacherAge");
     this.teacherComent = document.querySelector("#pTeacherComent");
     this.favoriteBtn = document.querySelector("#toggleFav");
-    this.listen(teachersPage);
-
+    this.teachersPage = teachersPage;
+    this.listen(this.teachersPage);
 
     // clouse on click "clouse button"
     this.clouseBtn.addEventListener("click", () => {
-        this.clouse();
-      });
-
-      // clouse on click container
-    this.container.addEventListener("click", (event) => {
-        if (event.target.classList.contains("popup-container")) {
-          this.clouse();
-        }
+      this.clouse();
     });
 
+    // clouse on click container
+    this.container.addEventListener("click", (event) => {
+      if (event.target.classList.contains("popup-container")) {
+        this.clouse();
+      }
+    });
   }
 
   renderData(elem) {
     this.teacherName.innerHTML = elem["full_name"];
-    this.teacherImg.src = elem["picture_large"];
+    this.checkImg(elem);
     this.teacherCity.innerHTML = elem["city"];
     this.teacherCountry.innerHTML = elem["country"];
     // this.teacherGender.innerHTML   = gender;
@@ -44,7 +43,7 @@ module.exports = class infoPopup extends Popup {
     this.teacherMail.innerHTML = elem["email"];
   }
 
-  listen(teachersPage) {
+  listen() {
     // foreach for all popup triggers
     this.trigers = this.getTriggers();
     this.trigers.forEach((el) => {
@@ -61,16 +60,15 @@ module.exports = class infoPopup extends Popup {
           this.renderData(elem);
           this.checkFavorite(elem);
           this.favoriteBtn.onclick = () => {
-            this.toggleFavorite(elem, teachersPage);
+            this.toggleFavorite(elem, this.teachersPage);
             this.checkCardFavorite(elem);
           };
         }
       });
-
     });
   }
 
-  openContainer(){
+  openContainer() {
     this.container.classList.add("open");
   }
 
@@ -80,7 +78,7 @@ module.exports = class infoPopup extends Popup {
     });
   }
 
-  toggleFavorite(elem, teachersPage) {
+  toggleFavorite(elem) {
     if (elem["favorite"] === true) {
       elem["favorite"] = false;
       this.popup.classList.remove("popup_teaher-info_teacher-favorite");
@@ -88,7 +86,7 @@ module.exports = class infoPopup extends Popup {
       elem["favorite"] = true;
       this.popup.classList.add("popup_teaher-info_teacher-favorite");
     }
-    teachersPage.renderFavorite();
+    this.teachersPage.renderFavorite();
     splideCarousel();
   }
 
@@ -100,14 +98,22 @@ module.exports = class infoPopup extends Popup {
     }
   }
 
-  checkCardFavorite(elem){
-    let card = document.getElementById(elem['id']);
-    if (elem["favorite"] === true){
-      card.classList.add('teacher-card_favorite');
+  checkImg(elem) {
+    if (!("picture_large" in elem) && !("picture_thumbnail" in elem)) {
+      this.teacherImg.src = "/src/images/user.png";
     } else {
-      card.classList.remove('teacher-card_favorite');
+      this.teacherImg.src = elem["picture_large"]
+        ? elem["picture_large"]
+        : elem["picture_thumbnail"];
     }
-    
   }
 
+  checkCardFavorite(elem) {
+    let card = document.getElementById(elem["id"]);
+    if (elem["favorite"] === true) {
+      card.classList.add("teacher-card_favorite");
+    } else {
+      card.classList.remove("teacher-card_favorite");
+    }
+  }
 };
