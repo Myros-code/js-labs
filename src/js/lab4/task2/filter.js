@@ -1,11 +1,10 @@
-const users = require("../../users");
 
 module.exports = class Filter {
-  constructor(teachersPage, info_teacher_popup) {
+  constructor(teachersPage, info_teacher_popup, sort) {
     this.favFilter = document.querySelector("#teacherFilter2");
-    this.users = this.getUsers();
     this.countryFilter = document.querySelector("#teacherFilter3");
-    this.filterUsers = this.getUsers();
+    this.filterUsers = [];
+    this.sort = sort;
     this.ageFilterMin = document.querySelector("#teacherFilter4");
     this.ageFilterMax = document.querySelector("#teacherFilter5");
     this.genderFilterMale = document.querySelector("#teacherFilter6");
@@ -14,16 +13,16 @@ module.exports = class Filter {
     this.filterBtn = document.querySelector("#filterBtn");
     this.teachersPage = teachersPage;
     this.info_teacher_popup = info_teacher_popup;
-    this.clickListener();
   }
 
-  filter() {
-    if (this.favFilter.checked) {
-      this.filterUsers = this.filterFavorites(this.getUsers());
-      console.log(this.getUsers());
-    } else {
-      this.filterUsers = this.getUsers();
-    }
+  filter(users) {
+    this.filterUsers = users;
+    // if (this.favFilter.checked) {
+    //   this.filterUsers = this.filterFavorites(this.getUsers());
+    //   console.log(this.getUsers());
+    // } else {
+    //   this.filterUsers = this.getUsers();
+    // }
 
     this.filterUsers = this.filterCounties(
       this.filterUsers,
@@ -43,34 +42,34 @@ module.exports = class Filter {
     );
   }
 
-  filterFavorites(arr) {
-    return arr.filter((el) => {
-      return el["favorite"];
-    });
-  }
+  // filterFavorites(arr) {
+  //   return arr.filter((el) => {
+  //     return el["favorite"];
+  //   });
+  // }
 
   filterCounties(arr, country) {
     if (country === "all" || country === "") {
       return arr;
     } else {
       return arr.filter((el) => {
-        return el["country"] === country;
+        return el.location.country === country;
       });
     }
   }
 
   filterAge(arr, min, max) {
     return arr.filter((el) => {
-      return el["age"] >= min && el["age"] <= max;
+      return el.dob.age >= min && el.dob.age <= max;
     });
   }
 
   filterGender(arr, male, female) {
     return arr.filter((el) => {
       if (male === true && female === false) {
-        return el["gender"] === "male";
+        return el.gender === "male";
       } else if (male === false && female === true) {
-        return el["gender"] === "female";
+        return el.gender === "female";
       } else {
         return arr;
       }
@@ -81,21 +80,25 @@ module.exports = class Filter {
     return this.filterUsers;
   }
 
-  clickListener() {
+  clickListener(users) {
     this.filterBtn.addEventListener("click", () => {
-      this.filter();
-      this.teachersPage.renderFilter(this.filterUsers);
-      this.info_teacher_popup.listen(this.teachersPage);
+      this.filter(users);
+      console.log(this.filterUsers);
+      this.teachersPage.render(this.filterUsers);
+      this.teachersPage.renderStatistic(this.filterUsers);
+      this.info_teacher_popup.listen(this.filterUsers);
+      this.sort.init(this.filterUsers);
     });
 
     this.remFilterBtn.addEventListener("click", () => {
       this.favFilter.checked = false;
-      this.teachersPage.renderFilter(this.users);
-      this.info_teacher_popup.listen(this.teachersPage);
+      this.teachersPage.render(users);
+      this.teachersPage.renderStatistic(users);
+      this.info_teacher_popup.listen(users);
+      this.sort.init(users);
     });
   }
 
-  getUsers() {
-    return users;
-  }
+
+
 };

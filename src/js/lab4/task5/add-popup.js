@@ -22,7 +22,6 @@ module.exports = class AddPopup extends Popup {
     this.filter = filter;
     this.mySort = mySort;
     this.mySearch = mySearch;
-    console.log(users);
     this.add();
   }
 

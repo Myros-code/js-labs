@@ -1,18 +1,18 @@
-const users = require("../../users");
+// const users = require("../../users");
 
 module.exports = class Teachers {
   constructor() {
-    this.favoriteTeachers = this.getFavTeachers();
+
   }
 
-  render() {
+  render(users, favUsers) {
     const cardContainer = document.querySelector(".teachers-cards__inner");
     cardContainer.innerHTML = "";
     users.forEach((element) => {
       let card = `<div
-    class="teacher-card ${this.checkFavorite(element)} ${this.checkImgClass(
+    class="teacher-card ${this.checkFavorite(element, favUsers)} ${this.checkImgClass(
         element
-      )} popup-trigger" id="${element["id"]}"
+      )} popup-trigger" id="${element.id.value}"
     data-popup="teacherInfo"
   >
     <img
@@ -25,8 +25,8 @@ module.exports = class Teachers {
         ${this.checkImgPhoto(element)}
       </div>
       <div class="teacher-card__info">
-        <h2 class="teacher-card__name">${element["full_name"]}</h2>
-        <span class="teacher-card__location">${element["country"]}</span>
+        <h2 class="teacher-card__name">${element.name.first} ${element.name.last}</h2>
+        <span class="teacher-card__location">${element.location.country}</span>
       </div>
     </div>
   </div>
@@ -35,56 +35,24 @@ module.exports = class Teachers {
     });
   }
 
-  renderFilter(arr) {
-    const cardContainer = document.querySelector(".teachers-cards__inner");
-    cardContainer.innerHTML = "";
-    arr.forEach((element) => {
-      let card = `<div
-      class="teacher-card ${this.checkFavorite(element)} ${this.checkImgClass(
-        element
-      )} popup-trigger" id="${element["id"]}"
-      data-popup="teacherInfo"
-    >
-      <img
-        src="./images/star.svg"
-        alt="star"
-        class="teacher-card_favorite__star-img"
-      />
-      <div class="teacher-card__inner">
-        <div class="teacher-card__img-block">
-          ${this.checkImgPhoto(element)}
-        </div>
-        <div class="teacher-card__info">
-          <h2 class="teacher-card__name">${element["full_name"]}</h2>
-          <span class="teacher-card__location">${element["country"]}</span>
-        </div>
-      </div>
-    </div>
-    `;
-      cardContainer.innerHTML += card;
-    });
-  }
-
-  renderFavorite() {
+  renderFavorite(users) {
     const favTeachList = document.querySelector("#favTeachers");
-    const favTeachersArr = this.getFavTeachers();
+    const favTeachersArr = users;
     favTeachList.innerHTML = "";
     favTeachersArr.forEach((element) => {
       let card = `
         <li class="splide__slide">
-            <div class="teacher-card ${this.checkFavorite(
+            <div class="teacher-card teacher-card_favorite ${this.checkImgClass(
               element
-            )} ${this.checkImgClass(element)}" data-card="${element["id"]}">
+            )}" data-card="${element.id.value}">
                 <img src="./images/star.svg" alt="star" class="teacher-card_favorite__star-img"/>
                 <div class="teacher-card__inner">
                     <div class="teacher-card__img-block">
                       ${this.checkImgPhoto(element)}
                     </div>
                     <div class="teacher-card__info">
-                    <h2 class="teacher-card__name">${element["full_name"]}</h2>
-                    <span class="teacher-card__location">${
-                      element["country"]
-                    }</span>
+                    <h2 class="teacher-card__name">${element.name.first} ${element.name.last}</h2>
+                    <span class="teacher-card__location">${element.location.country}</span>
                     </div>
                 </div>
             </div>
@@ -96,36 +64,39 @@ module.exports = class Teachers {
   renderStatistic(arr) {
     const statisticTable = document.querySelector(".statistics-table__body");
     statisticTable.innerHTML = `<tr>
-    <th class="statistics-table__filter-toggles" data-sort="full_name">Name</th>
+    <th class="statistics-table__filter-toggles" data-sort="name">Name</th>
     <th class="statistics-table__filter-toggles" data-sort="age">Age</th>
     <th class="statistics-table__filter-toggles" data-sort="b_date">Birthday</th>
     <th class="statistics-table__filter-toggles" data-sort="country">Country</th>
     </tr>`;
     arr.forEach((element) => {
       let statisticItem = `<tr>
-      <td>${element["full_name"]}</td>
-      <td>${element["age"]}</td>
-      <td>${this.getBirthday(new Date(element["b_date"]))}</td>
-      <td>${element["country"]}</td>
+      <td>${element.name.first} ${element.name.last}</td>
+      <td>${element.dob.age}</td>
+      <td>${this.getBirthday(new Date(element.dob.date))}</td>
+      <td>${element.location.country}</td>
     </tr>`;
       statisticTable.innerHTML += statisticItem;
     });
   }
 
-  getTeachers() {
-    return users;
-  }
+  // getTeachers() {
+  //   return users;
+  // }
 
-  checkFavorite(element) {
-    if (element["favorite"] === true) {
-      return "teacher-card_favorite";
+  checkFavorite(element, favUsers) {
+    let res = favUsers.findIndex((el) => {
+      return el.id.value === element.id.value;
+    });
+    if (res === -1){
+      return '';
     } else {
-      return "";
+      return 'teacher-card_favorite';
     }
   }
 
   checkImgClass(element) {
-    if (!("picture_large" in element) && !("picture_thumbnail" in element)) {
+    if (!('large' in element.picture) && !('medium' in element.picture) && !('thumbnail' in element.picture)) {
       return "teacher-card_without-img";
     } else {
       return "";
@@ -133,15 +104,18 @@ module.exports = class Teachers {
   }
 
   checkImgPhoto(element) {
-    if (!("picture_large" in element) && !("picture_thumbnail" in element)) {
-      return `<span class="teacher-card__initials">${element["full_name"]}</span>`;
+    if (!('large' in element.picture) && !('medium' in element.picture) && !('thumbnail' in element.picture)) {
+      let firstLetterName = element.name.first.slice(1,1);
+      let secondLetterName = element.name.second.slice(1,1);
+      return `<span class="teacher-card__initials">${firstLetterName}.${secondLetterName}</span>`;
     } else {
       return `<img
           src='${
-            element["picture_large"]
-              ? element["picture_large"]
-              : element["picture_thumbnail"]
-          }'
+            element.picture.large
+              ? element.picture.large
+              : element.picture.medium ? element.picture.medium
+              : element.picture.thumbnail
+            }'
           height="200"
           width="auto"
           alt="teacher"
@@ -150,7 +124,7 @@ module.exports = class Teachers {
     }
   }
 
-  getFavTeachers() {
+  getFavTeachers(users) {
     return users.filter((el) => {
       return el["favorite"] === true;
     });

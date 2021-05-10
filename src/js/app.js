@@ -4,14 +4,16 @@ import splideCarousel from "./vendors/splide-carousel";
 
 import infoPopup from "./vendors/info-popup";
 
-const users = require("./users");
-
 // for lab 4
 import Teachers from "./lab4/task1/teachers";
 import Filter from "./lab4/task2/filter";
 import Sort from "./lab4/task3/sort";
 import Search from "./lab4/task4/search";
 import AddPopup from "./lab4/task5/add-popup";
+
+// for lab 5
+import UserApi from "./lab5/task1/userApi";
+import Pagination from "./lab5/task4/pagination";
 
 // Include my css styles
 require("../css/app.css");
@@ -20,20 +22,25 @@ require("../scss/style.scss");
 
 class App {
   constructor() {
-    this.users = this.getUsers();
-    this.teachersPage = new Teachers();
-    this.teachersPage.render();
-    this.teachersPage.renderStatistic(this.users);
-    this.teachersPage.renderFavorite();
-    this.info_teacher_popup = new infoPopup("teacherInfo", this.teachersPage);
-    this.filter = new Filter(this.teachersPage, this.info_teacher_popup);
-    this.mySort = new Sort(this.teachersPage);
-    this.mySearch = new Search(
-      this.info_teacher_popup,
+    this.userApi = new UserApi();
+    this.usersAll = [];
+    this.users = [];
+    this.favUsers = [];
+    this.teachersPage = new Teachers(this.favUsers);
+    this.info_teacher_popup = new infoPopup(
+      "teacherInfo",
       this.teachersPage,
-      this.filter
+      this.favUsers
     );
-    splideCarousel();
+    this.mySort = new Sort(this.teachersPage);
+    this.filter = new Filter(this.teachersPage, this.info_teacher_popup, this.mySort);
+    this.init();
+    
+
+    this.pagBtns = document.querySelectorAll(".pag");
+    this.pagBox = document.querySelector('.pagination__inner');
+    this.changeChunk();
+
     this.addPopup = new AddPopup(
       "addTeacher",
       this.teachersPage,
@@ -42,15 +49,154 @@ class App {
       this.mySort,
       this.mySearch
     );
+
+    splideCarousel();
   }
 
-  init() {}
-
-  getUsers() {
-    return users;
+  init() {
+    this.renderUsers();
+    this.renderStart();
   }
+
+  renderUsers() {
+    this.userApi.getUsersChunk().then((response) => {
+      this.usersAll = response.results;
+      this.mySearch = new Search(
+        this.info_teacher_popup,
+        this.teachersPage,
+        this.filter,
+        this.usersAll
+      );
+    });
+  }
+
+  renderStart() {
+    this.userApi.getStartPage().then((response) => {
+      this.users = response.results;
+      console.log(this.users);
+      this.teachersPage.render(response.results, this.favUsers);
+      this.teachersPage.renderStatistic(response.results);
+      this.mySort.init(this.users);
+      this.info_teacher_popup.listen(this.users);
+      this.filter.clickListener(this.users);
+    });
+  }
+
+  renderChunk(num) {
+    this.userApi.getUsersChunk().then((response) => {
+      this.users = response.results;
+      let chunk = response.results.slice((num-1)*10, num*10);
+      this.teachersPage.render(chunk, this.favUsers);
+      this.teachersPage.renderStatistic(chunk);
+      this.mySort.init(chunk);
+      this.info_teacher_popup.listen(chunk);
+      this.filter.clickListener(chunk);
+    });
+  }
+
+  changeChunk() {
+    this.pagBtns.forEach((element) => {
+      element.addEventListener("click", (e) => {
+        e.preventDefault();
+        let num = Number(e.target.closest('.pag').dataset.pagination);
+        let whatDo = e.target.closest('.pag').dataset.page;
+
+        if (whatDo === "+") {
+          this.userApi.CURPAGE += num;
+
+          if (this.userApi.CURPAGE >= 5) {
+            this.userApi.CURPAGE = 5;
+          }
+        } else if (whatDo === "-") {
+          this.userApi.CURPAGE -= num;
+
+          if (this.userApi.CURPAGE <= 0) {
+            this.userApi.CURPAGE = 1;
+          }
+        } else {
+          this.userApi.CURPAGE = num;
+        }
+        this.renderChunk(this.userApi.CURPAGE);
+        this.renderPagination(this.userApi.CURPAGE);
+      });
+      if(element.innerText == this.userApi.CURPAGE){
+        element.classList.add('pagination__item_current');
+      }
+    });
+  }
+
+  renderPagination(curNum) {
+    curNum = Number(curNum);
+    let pagination = `<a href="#!" class="pag pagination__btn" data-page="-" data-pagination="3">
+    <img class="pagination__arrow-img pagination__arrow-img_left" src="./images/right-arrow.svg" alt="">
+  </a>
+  <a href="#!" class="pag pagination__btn" data-page="-" data-pagination="1">
+    <img class="pagination__arrow-img pagination__arrow-img_left" src="./images/right-arrow-one.svg" alt="">
+  </a>
+  ${this.checkPag(curNum)}
+  <a href="#!" class="pag pagination__btn" data-page="+" data-pagination="1" id="nextPage">
+    <img class="pagination__arrow-img" src="./images/right-arrow-one.svg" alt="">
+  </a>
+  <a href="#!" class="pag pagination__btn" data-page="+" data-pagination="3">
+    <img class="pagination__arrow-img" src="./images/right-arrow.svg" alt="">
+  </a>`;
+    this.pagBox.innerHTML = pagination;
+    this.pagBtns = document.querySelectorAll(".pag");
+    this.changeChunk();
+  }
+
+  checkPag(curNum){
+    if (curNum - 1 <= 0){
+      return `<a href="#!" class="pag pagination__item" data-pagination="1">1</a>
+      <a href="#!" class="pag pagination__item" data-pagination="2">2</a>
+      <a href="#!" class="pag pagination__item" data-pagination="3">3</a>`
+    }else if (curNum + 1 >= 5){
+      return `<a href="#!" class="pag pagination__item" data-pagination="3">3</a>
+      <a href="#!" class="pag pagination__item" data-pagination="4">4</a>
+      <a href="#!" class="pag pagination__item" data-pagination="5">5</a>`
+    } else {
+      return `<a href="#!" class="pag pagination__item" data-pagination="${curNum-1}">${curNum-1}</a>
+      <a href="#!" class="pag pagination__item" data-pagination="${curNum}">${curNum}</a>
+      <a href="#!" class="pag pagination__item" data-pagination="${curNum+1}">${curNum+1}</a>`
+    }
+  }
+
+  validateId(arr){
+    arr.forEach((el) => {
+      if (el.id.value === null){
+        el.id.value = this.giveId();
+      }
+    });
+  }
+
+
+  giveId() {
+    let id = this.getRandomInt(1, 10000);
+    return this.checkSameId(id);
+  }
+
+  checkSameId(id) {
+    if (
+      users.findIndex((elem) => {
+        Number(elem.id.value) === Number(id);
+      }) !== -1
+    ) {
+      this.giveId();
+    } else {
+      return id;
+    }
+  }
+
+  getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+  }
+
+
 }
-const app = new App();
+
+export const app = new App();
 
 // appendCards(users);
 

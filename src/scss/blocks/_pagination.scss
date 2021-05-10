@@ -1,16 +1,43 @@
 .pagination {
   margin-top: 25px;
   margin-left: 12px;
+  
   &__inner {
     float: left;
+    display: flex;
   }
   &__item {
+    min-width: 30px;
+    min-height: 30px;
     text-decoration: none;
     color: $blue-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 8px;
-    &:focus {
+    border: 1px solid transparent;
+    &_current{
       color: $main-font-color;
       background-color: #fafafa;
+      border: 1px solid black;
+    }
+  }
+  &__btn{
+    min-width: 30px;
+    min-height: 30px;
+    text-decoration: none;
+    color: $blue-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 1px solid transparent;
+  }
+  &__arrow-img{
+    max-width: 12px;
+    min-height: 12px;
+    &_left{
+      transform: rotate(180deg);
     }
   }
 }

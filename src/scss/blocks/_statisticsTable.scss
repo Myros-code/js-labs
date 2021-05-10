@@ -1,7 +1,9 @@
 .statistics-table {
   &__inner {
   }
+ 
   &__item {
+    min-height: 400px;
     width: 100%;
     tr {
       th,
