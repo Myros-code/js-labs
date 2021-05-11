@@ -84,6 +84,7 @@ body {
     display: none;
     &.active{
       display: block;
+      z-index: 10;
     }
   }
   &__item{

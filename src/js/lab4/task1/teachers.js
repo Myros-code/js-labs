@@ -1,18 +1,17 @@
 // const users = require("../../users");
 
 module.exports = class Teachers {
-  constructor() {
-
-  }
+  constructor() {}
 
   render(users, favUsers) {
     const cardContainer = document.querySelector(".teachers-cards__inner");
     cardContainer.innerHTML = "";
     users.forEach((element) => {
       let card = `<div
-    class="teacher-card ${this.checkFavorite(element, favUsers)} ${this.checkImgClass(
-        element
-      )} popup-trigger" id="${element.id.value}"
+    class="teacher-card ${this.checkFavorite(
+      element,
+      favUsers
+    )} ${this.checkImgClass(element)} popup-trigger" id="${element.id.value}"
     data-popup="teacherInfo"
   >
     <img
@@ -25,7 +24,9 @@ module.exports = class Teachers {
         ${this.checkImgPhoto(element)}
       </div>
       <div class="teacher-card__info">
-        <h2 class="teacher-card__name">${element.name.first} ${element.name.last}</h2>
+        <h2 class="teacher-card__name">${element.name.first} ${
+        element.name.last
+      }</h2>
         <span class="teacher-card__location">${element.location.country}</span>
       </div>
     </div>
@@ -51,8 +52,12 @@ module.exports = class Teachers {
                       ${this.checkImgPhoto(element)}
                     </div>
                     <div class="teacher-card__info">
-                    <h2 class="teacher-card__name">${element.name.first} ${element.name.last}</h2>
-                    <span class="teacher-card__location">${element.location.country}</span>
+                    <h2 class="teacher-card__name">${element.name.first} ${
+        element.name.last
+      }</h2>
+                    <span class="teacher-card__location">${
+                      element.location.country
+                    }</span>
                     </div>
                 </div>
             </div>
@@ -80,23 +85,23 @@ module.exports = class Teachers {
     });
   }
 
-  // getTeachers() {
-  //   return users;
-  // }
-
   checkFavorite(element, favUsers) {
     let res = favUsers.findIndex((el) => {
       return el.id.value === element.id.value;
     });
-    if (res === -1){
-      return '';
+    if (res === -1) {
+      return "";
     } else {
-      return 'teacher-card_favorite';
+      return "teacher-card_favorite";
     }
   }
 
   checkImgClass(element) {
-    if (!('large' in element.picture) && !('medium' in element.picture) && !('thumbnail' in element.picture)) {
+    if (
+      !("large" in element.picture) &&
+      !("medium" in element.picture) &&
+      !("thumbnail" in element.picture)
+    ) {
       return "teacher-card_without-img";
     } else {
       return "";
@@ -104,18 +109,23 @@ module.exports = class Teachers {
   }
 
   checkImgPhoto(element) {
-    if (!('large' in element.picture) && !('medium' in element.picture) && !('thumbnail' in element.picture)) {
-      let firstLetterName = element.name.first.slice(1,1);
-      let secondLetterName = element.name.second.slice(1,1);
+    if (
+      !("large" in element.picture) &&
+      !("medium" in element.picture) &&
+      !("thumbnail" in element.picture)
+    ) {
+      let firstLetterName = element.name.first.slice(0, 1);
+      let secondLetterName = element.name.last.slice(0, 1);
       return `<span class="teacher-card__initials">${firstLetterName}.${secondLetterName}</span>`;
     } else {
       return `<img
           src='${
             element.picture.large
               ? element.picture.large
-              : element.picture.medium ? element.picture.medium
+              : element.picture.medium
+              ? element.picture.medium
               : element.picture.thumbnail
-            }'
+          }'
           height="200"
           width="auto"
           alt="teacher"

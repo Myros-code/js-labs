@@ -14,7 +14,6 @@ module.exports = class infoPopup extends Popup {
     this.teacherMail = document.querySelector("#pTeacherMail");
     this.teacherAge = document.querySelector("#pTeacherAge");
     this.favoriteBtn = document.querySelector("#toggleFav");
-    this.trigers = document.querySelectorAll('.popup-trigger');
     this.teachersPage = teachersPage;
     this.favUsers = favUsers;
 
@@ -43,8 +42,8 @@ module.exports = class infoPopup extends Popup {
   }
 
   listen(users) {
+    this.trigers = this.getTriggers();
     // foreach for all popup triggers
-    this.trigers = document.querySelectorAll('.popup-trigger');
     this.trigers.forEach((el) => {
       // even trigger listen "click event"
       el.addEventListener("click", (event) => {
@@ -52,7 +51,6 @@ module.exports = class infoPopup extends Popup {
         let card = event.target.closest(".popup-trigger");
         let cardId = card.id;
         let elem = this.getElem(users, cardId);
-        console.log(elem);
 
         // see, if container open
         if (this.container.classList.contains("open")) {
@@ -74,7 +72,7 @@ module.exports = class infoPopup extends Popup {
 
   getElem(users, cardId) {
     return users.find((el) => {
-      return el.id.value === cardId;
+      return el.id.value == cardId;
     });
   }
 
@@ -83,30 +81,22 @@ module.exports = class infoPopup extends Popup {
       return el.id.value === elem.id.value;
     });
     let card = document.getElementById(elem.id.value);
-    console.log(res);
-    console.log(card);
-    console.log(users);
-
-    if (res === -1){
+    if (res === -1) {
       users.push(elem);
       this.popup.classList.add("popup_teaher-info_teacher-favorite");
-      card.classList.add("teacher-card_favorite");
+      if (card === null) {
+      } else {
+        card.classList.add("teacher-card_favorite");
+      }
     } else {
       users.splice(res, 1);
       this.popup.classList.remove("popup_teaher-info_teacher-favorite");
-      card.classList.remove("teacher-card_favorite");
+
+      if (card === null) {
+      } else {
+        card.classList.remove("teacher-card_favorite");
+      }
     }
-    console.log(users);
-
-    
-    // if (elem["favorite"] === true) {
-    //   elem["favorite"] = false;
-    //   this.popup.classList.remove("popup_teaher-info_teacher-favorite");
-    // } else {
-    //   elem["favorite"] = true;
-    //   this.popup.classList.add("popup_teaher-info_teacher-favorite");
-    // }
-
 
     this.teachersPage.renderFavorite(users);
     splideCarousel();
@@ -116,7 +106,7 @@ module.exports = class infoPopup extends Popup {
     let res = users.findIndex((el) => {
       return el.id.value === elem.id.value;
     });
-    if (res === -1){
+    if (res === -1) {
       this.popup.classList.remove("popup_teaher-info_teacher-favorite");
     } else {
       this.popup.classList.add("popup_teaher-info_teacher-favorite");
@@ -125,9 +115,9 @@ module.exports = class infoPopup extends Popup {
 
   checkImg(elem) {
     if (
-      !('large' in elem.picture) &&
-      !('medium' in elem.picture) &&
-      !('thumbnail' in elem.picture)
+      !("large" in elem.picture) &&
+      !("medium" in elem.picture) &&
+      !("thumbnail" in elem.picture)
     ) {
       this.teacherImg.src = userImg;
     } else {
@@ -147,7 +137,6 @@ module.exports = class infoPopup extends Popup {
     } else {
       card.classList.remove("teacher-card_favorite");
     }
-
   }
 
   getGender(elem) {

@@ -969,6 +969,7 @@ body {
 
 .search-group__list.active {
   display: block;
+  z-index: 10;
 }
 
 .search-group__item {

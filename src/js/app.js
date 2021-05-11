@@ -13,7 +13,6 @@ import AddPopup from "./lab4/task5/add-popup";
 
 // for lab 5
 import UserApi from "./lab5/task1/userApi";
-import Pagination from "./lab5/task4/pagination";
 
 // Include my css styles
 require("../css/app.css");
@@ -32,14 +31,51 @@ class App {
       this.teachersPage,
       this.favUsers
     );
+
     this.mySort = new Sort(this.teachersPage);
-    this.filter = new Filter(this.teachersPage, this.info_teacher_popup, this.mySort);
+    this.filter = new Filter(
+      this.teachersPage,
+      this.info_teacher_popup,
+      this.mySort
+    );
     this.init();
-    
 
     this.pagBtns = document.querySelectorAll(".pag");
-    this.pagBox = document.querySelector('.pagination__inner');
+    this.pagBox = document.querySelector(".pagination__inner");
     this.changeChunk();
+
+    splideCarousel();
+  }
+
+  init() {
+    this.renderUsers();
+  }
+
+  renderUsers() {
+    this.userApi
+      .getUsersChunk()
+      .then((response) => {
+        this.usersAll = response.results;
+        this.validateId(this.usersAll);
+      })
+      .then(() => {
+        this.renderStart();
+      });
+  }
+
+  renderStart() {
+    this.mySearch = new Search(
+      this.info_teacher_popup,
+      this.teachersPage,
+      this.filter,
+      this.usersAll,
+      this.favUsers
+    );
+    this.renderChunk(1);
+  }
+
+  renderChunk(num) {
+    let chunk = this.usersAll.slice((num - 1) * 10, num * 10);
 
     this.addPopup = new AddPopup(
       "addTeacher",
@@ -47,65 +83,30 @@ class App {
       this.info_teacher_popup,
       this.filter,
       this.mySort,
-      this.mySearch
+      this.mySearch,
+      chunk,
+      this.favUsers,
+      this.usersAll
     );
-
-    splideCarousel();
-  }
-
-  init() {
-    this.renderUsers();
-    this.renderStart();
-  }
-
-  renderUsers() {
-    this.userApi.getUsersChunk().then((response) => {
-      this.usersAll = response.results;
-      this.mySearch = new Search(
-        this.info_teacher_popup,
-        this.teachersPage,
-        this.filter,
-        this.usersAll
-      );
-    });
-  }
-
-  renderStart() {
-    this.userApi.getStartPage().then((response) => {
-      this.users = response.results;
-      console.log(this.users);
-      this.teachersPage.render(response.results, this.favUsers);
-      this.teachersPage.renderStatistic(response.results);
-      this.mySort.init(this.users);
-      this.info_teacher_popup.listen(this.users);
-      this.filter.clickListener(this.users);
-    });
-  }
-
-  renderChunk(num) {
-    this.userApi.getUsersChunk().then((response) => {
-      this.users = response.results;
-      let chunk = response.results.slice((num-1)*10, num*10);
-      this.teachersPage.render(chunk, this.favUsers);
-      this.teachersPage.renderStatistic(chunk);
-      this.mySort.init(chunk);
-      this.info_teacher_popup.listen(chunk);
-      this.filter.clickListener(chunk);
-    });
+    this.teachersPage.render(chunk, this.favUsers);
+    this.teachersPage.renderStatistic(chunk);
+    this.mySort.init(chunk);
+    this.info_teacher_popup.listen(chunk);
+    this.filter.clickListener(chunk, this.favUsers);
   }
 
   changeChunk() {
     this.pagBtns.forEach((element) => {
       element.addEventListener("click", (e) => {
         e.preventDefault();
-        let num = Number(e.target.closest('.pag').dataset.pagination);
-        let whatDo = e.target.closest('.pag').dataset.page;
+        let num = Number(e.target.closest(".pag").dataset.pagination);
+        let whatDo = e.target.closest(".pag").dataset.page;
 
         if (whatDo === "+") {
           this.userApi.CURPAGE += num;
 
-          if (this.userApi.CURPAGE >= 5) {
-            this.userApi.CURPAGE = 5;
+          if (this.userApi.CURPAGE >= 6) {
+            this.userApi.CURPAGE = 6;
           }
         } else if (whatDo === "-") {
           this.userApi.CURPAGE -= num;
@@ -119,8 +120,8 @@ class App {
         this.renderChunk(this.userApi.CURPAGE);
         this.renderPagination(this.userApi.CURPAGE);
       });
-      if(element.innerText == this.userApi.CURPAGE){
-        element.classList.add('pagination__item_current');
+      if (element.innerText == this.userApi.CURPAGE) {
+        element.classList.add("pagination__item_current");
       }
     });
   }
@@ -145,43 +146,46 @@ class App {
     this.changeChunk();
   }
 
-  checkPag(curNum){
-    if (curNum - 1 <= 0){
+  checkPag(curNum) {
+    if (curNum - 1 <= 0) {
       return `<a href="#!" class="pag pagination__item" data-pagination="1">1</a>
       <a href="#!" class="pag pagination__item" data-pagination="2">2</a>
-      <a href="#!" class="pag pagination__item" data-pagination="3">3</a>`
-    }else if (curNum + 1 >= 5){
-      return `<a href="#!" class="pag pagination__item" data-pagination="3">3</a>
-      <a href="#!" class="pag pagination__item" data-pagination="4">4</a>
-      <a href="#!" class="pag pagination__item" data-pagination="5">5</a>`
+      <a href="#!" class="pag pagination__item" data-pagination="3">3</a>`;
+    } else if (curNum + 1 >= 6) {
+      return `<a href="#!" class="pag pagination__item" data-pagination="4">4</a>
+      <a href="#!" class="pag pagination__item" data-pagination="5">5</a>
+      <a href="#!" class="pag pagination__item" data-pagination="6">6</a>`;
     } else {
-      return `<a href="#!" class="pag pagination__item" data-pagination="${curNum-1}">${curNum-1}</a>
+      return `<a href="#!" class="pag pagination__item" data-pagination="${
+        curNum - 1
+      }">${curNum - 1}</a>
       <a href="#!" class="pag pagination__item" data-pagination="${curNum}">${curNum}</a>
-      <a href="#!" class="pag pagination__item" data-pagination="${curNum+1}">${curNum+1}</a>`
+      <a href="#!" class="pag pagination__item" data-pagination="${
+        curNum + 1
+      }">${curNum + 1}</a>`;
     }
   }
 
-  validateId(arr){
+  validateId(arr) {
     arr.forEach((el) => {
-      if (el.id.value === null){
-        el.id.value = this.giveId();
+      if (el.id.value === null) {
+        el.id.value = this.giveId(arr);
       }
     });
   }
 
-
-  giveId() {
-    let id = this.getRandomInt(1, 10000);
-    return this.checkSameId(id);
+  giveId(arr) {
+    const id = this.getRandomInt(1, 10000);
+    return this.checkSameId(id, arr);
   }
 
-  checkSameId(id) {
+  checkSameId(id, arr) {
     if (
-      users.findIndex((elem) => {
+      arr.findIndex((elem) => {
         Number(elem.id.value) === Number(id);
       }) !== -1
     ) {
-      this.giveId();
+      this.giveId(arr);
     } else {
       return id;
     }
@@ -190,15 +194,8 @@ class App {
   getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+    return Math.floor(Math.random() * (max - min)) + min;
   }
-
-
 }
 
 export const app = new App();
-
-// appendCards(users);
-
-// --------------INITIALIZING SPLIDE CAROUSEL INIT FUNCTION ----------------------
-// --------------INITIALIZING MODAL INIT FUNCTION ----------------------

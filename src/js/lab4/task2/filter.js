@@ -1,4 +1,3 @@
-
 module.exports = class Filter {
   constructor(teachersPage, info_teacher_popup, sort) {
     this.favFilter = document.querySelector("#teacherFilter2");
@@ -16,13 +15,12 @@ module.exports = class Filter {
   }
 
   filter(users) {
-    this.filterUsers = users;
-    // if (this.favFilter.checked) {
-    //   this.filterUsers = this.filterFavorites(this.getUsers());
-    //   console.log(this.getUsers());
-    // } else {
-    //   this.filterUsers = this.getUsers();
-    // }
+    this.filterUsers = users.slice();
+    if (this.favFilter.checked) {
+      this.filterUsers = this.filterFavorites(this.filterUsers);
+    } else {
+      this.filterUsers = users.slice();
+    }
 
     this.filterUsers = this.filterCounties(
       this.filterUsers,
@@ -42,11 +40,15 @@ module.exports = class Filter {
     );
   }
 
-  // filterFavorites(arr) {
-  //   return arr.filter((el) => {
-  //     return el["favorite"];
-  //   });
-  // }
+  filterFavorites(arr) {
+    return arr.filter((el) => {
+      let card = document.getElementById(el.id.value);
+      if (card === null) {
+      } else {
+        return card.classList.contains("teacher-card_favorite");
+      }
+    });
+  }
 
   filterCounties(arr, country) {
     if (country === "all" || country === "") {
@@ -76,29 +78,25 @@ module.exports = class Filter {
     });
   }
 
-  getFilterUs() {
+  getUsers() {
     return this.filterUsers;
   }
 
-  clickListener(users) {
-    this.filterBtn.addEventListener("click", () => {
+  clickListener(users, favUsers) {
+    this.filterBtn.onclick = () => {
       this.filter(users);
-      console.log(this.filterUsers);
-      this.teachersPage.render(this.filterUsers);
+      this.teachersPage.render(this.filterUsers, favUsers);
       this.teachersPage.renderStatistic(this.filterUsers);
       this.info_teacher_popup.listen(this.filterUsers);
       this.sort.init(this.filterUsers);
-    });
+    };
 
-    this.remFilterBtn.addEventListener("click", () => {
+    this.remFilterBtn.onclick = () => {
       this.favFilter.checked = false;
-      this.teachersPage.render(users);
+      this.teachersPage.render(users, favUsers);
       this.teachersPage.renderStatistic(users);
       this.info_teacher_popup.listen(users);
       this.sort.init(users);
-    });
+    };
   }
-
-
-
 };

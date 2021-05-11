@@ -10,9 +10,11 @@ module.exports = class Popup {
   }
 
   listen() {
+    this.trigers = this.getTriggers();
     // foreach for all popup triggers
     this.trigers.forEach((el) => {
       // even trigger listen "click event"
+
       el.addEventListener("click", () => {
         // open container
         this.container.classList.add("open");
@@ -61,7 +63,6 @@ module.exports = class Popup {
       } else {
       }
     });
-
     return arr;
   }
 };

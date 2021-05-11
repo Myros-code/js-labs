@@ -1,24 +1,24 @@
 const FindList = require("./findList");
 
 module.exports = class Search {
-  constructor(info_popup, teachersPage, filter, users) {
+  constructor(info_popup, teachersPage, filter, users, favUsers) {
     this.findList = new FindList();
     this.info_popup = info_popup;
     this.teachersPage = teachersPage;
     this.filter = filter;
     this.searchField = document.querySelector("#teacherSearch");
     this.searchBtn = document.querySelector("#searchBtn");
-    this.init(users);
+    this.init(users, favUsers);
   }
 
-  init(users) {
+  init(users, favUsers) {
     this.searchField.oninput = () => {
       this.findList.listenFocus(this.searchField);
       this.findList.showList();
       this.findList.clearList();
       this.findList.getAllItems();
       this.findSimilar(users);
-      this.listenClick(users);
+      this.listenClick(users, favUsers);
     };
   }
 
@@ -78,7 +78,7 @@ module.exports = class Search {
     }
   }
 
-  listenClick(users) {
+  listenClick(users, favUsers) {
     let items = this.findList.getAllItems();
     items.forEach((element) => {
       element.addEventListener("click", (event) => {
@@ -90,12 +90,11 @@ module.exports = class Search {
         if (this.info_popup.container.classList.contains("open")) {
           this.info_popup.open();
           this.info_popup.renderData(elem);
-          this.info_popup.checkFavorite(elem);
+          this.info_popup.checkFavorite(elem, favUsers);
 
           this.info_popup.favoriteBtn.onclick = () => {
-            // this.info_popup.toggleFavorite(elem, this.teachersPage);
-            // this.filter.filter();
-            // this.teachersPage.renderFilter(this.filter.filterUsers);
+            this.info_popup.toggleFavorite(elem, favUsers);
+            this.info_popup.checkFavorite(elem, favUsers);
             this.info_popup.listen(this.teachersPage);
           };
         }
