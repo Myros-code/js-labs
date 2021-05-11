@@ -8,6 +8,8 @@
 /* Import splide caousel files */
 @import url("../../node_modules/@splidejs/splide/dist/css/splide.min.css");
 
+
+
 /* my styles */
 @import url('../scss/style.css');
 

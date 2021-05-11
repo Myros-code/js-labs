@@ -1,7 +1,5 @@
 // --------------IMPORT SPLIDE CAROUSEL INIT FUNCTION ----------------------
 import splideCarousel from "./vendors/splide-carousel";
-// import modalInit from "./modal";
-
 import infoPopup from "./vendors/info-popup";
 
 // for lab 4
@@ -88,6 +86,7 @@ class App {
       this.favUsers,
       this.usersAll
     );
+    console.log(this.usersAll);
     this.teachersPage.render(chunk, this.favUsers);
     this.teachersPage.renderStatistic(chunk);
     this.mySort.init(chunk);

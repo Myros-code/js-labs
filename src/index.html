@@ -6,6 +6,9 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Project</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
     <link rel="stylesheet" href="./css/app.css" />
   </head>
 
@@ -78,11 +81,14 @@
                       <li class="popup_teaher-info__data-list-item">
                         <span class="popup_teaher-info__phone" id="pTeacherPhone">+380999910043</span>
                       </li>
+                      <li class="popup_teaher-info__data-list-item">
+                        <span class="popup_teaher-info__bday" id="pNextBday"></span>
+                      </li>
                     </ul>
                   </div>
                 </div>
                 <div class="popup_teaher-info__toggle-map-block">
-                  <a href="#!" class="popup_teaher-info__toggle-map"
+                  <a href="#!" id="mapid" class="popup_teaher-info__toggle-map"
                     >toggle map</a
                   >
                 </div>
@@ -259,6 +265,7 @@
     </div>
     <!-----------------------/POPUP CONTAINER ----------------------->
 
+    <div class="" id='mapid2'></div>
     <div class="wrapper">
       <!----------------------HEADER ------------------------------->
       <header class="header">
@@ -707,4 +714,8 @@
     </div>
     <script type="text/javascript" src="../build/js/app.js"></script>
   </body>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
 </html>

@@ -1,6 +1,8 @@
 import Popup from "./popups";
 import userImg from "../../images/user.png";
 import splideCarousel from "./splide-carousel";
+const dayjs = require("dayjs");
+const L = require("leaflet");
 
 module.exports = class infoPopup extends Popup {
   constructor(id, teachersPage, favUsers) {
@@ -12,8 +14,11 @@ module.exports = class infoPopup extends Popup {
     this.teacherGender = document.querySelector("#pTeacherGender");
     this.teacherPhone = document.querySelector("#pTeacherPhone");
     this.teacherMail = document.querySelector("#pTeacherMail");
+    this.teacherNexBday = document.querySelector("#pNextBday");
     this.teacherAge = document.querySelector("#pTeacherAge");
     this.favoriteBtn = document.querySelector("#toggleFav");
+    this.mapContainer = document.querySelector("#mapid");
+    this.mymap = L.map("mapid").setView([50, 50], 13);
     this.teachersPage = teachersPage;
     this.favUsers = favUsers;
 
@@ -31,6 +36,7 @@ module.exports = class infoPopup extends Popup {
   }
 
   renderData(elem) {
+    this.teacherNexBday.innerText = this.getTimetoBday(elem);
     this.teacherName.innerHTML = `${elem.name.first} ${elem.name.last}`;
     this.checkImg(elem);
     this.teacherCity.innerHTML = elem.location.city;
@@ -39,6 +45,8 @@ module.exports = class infoPopup extends Popup {
     this.teacherPhone.innerHTML = elem.phone;
     this.teacherAge.innerHTML = elem.dob.age;
     this.teacherMail.innerHTML = elem.email;
+    this.getMap(elem);
+    // let mymap = L.map('mapid').setView([51.505, -0.09], 13);
   }
 
   listen(users) {
@@ -129,6 +137,13 @@ module.exports = class infoPopup extends Popup {
     }
   }
 
+  getTimetoBday(elem) {
+    let nowDate = dayjs();
+    let dateB = dayjs(elem.dob.date).set("year", dayjs().year());
+    let left = Math.abs(dateB.diff(nowDate, "days"));
+    return `Birthday left ${left} days`;
+  }
+
   checkCardFavorite(elem) {
     let card = document.getElementById(elem.id.value);
 
@@ -136,6 +151,39 @@ module.exports = class infoPopup extends Popup {
       card.classList.add("teacher-card_favorite");
     } else {
       card.classList.remove("teacher-card_favorite");
+    }
+  }
+
+  getMap(elem) {
+    if ("coordinates" in elem.location) {
+      this.mapContainer.style.display = "block";
+      this.mymap.setView(
+        [
+          elem.location.coordinates.latitude,
+          elem.location.coordinates.longitude,
+        ],
+        13
+      );
+      L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: "mapbox/streets-v11",
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken:
+            "pk.eyJ1IjoibXlyaWtjb2RlciIsImEiOiJja29qZ3E0anowdW9rMnFybXJqdnkzbTA1In0.3oMNXNVYehfocKeYqwNz4Q",
+        }
+      ).addTo(this.mymap);
+
+      L.marker([
+        elem.location.coordinates.latitude,
+        elem.location.coordinates.longitude,
+      ]).addTo(this.mymap);
+    } else {
+      this.mapContainer.style.display = "none";
     }
   }
 

@@ -889,6 +889,12 @@
   width: 18px;
 }
 
+#mapid,
+#mapid2 {
+  height: 180px;
+  display: block;
+}
+
 html {
   font-size: 15px;
   scroll-behavior: smooth;

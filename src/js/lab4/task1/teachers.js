@@ -1,5 +1,4 @@
-// const users = require("../../users");
-
+const dayjs = require('dayjs');
 module.exports = class Teachers {
   constructor() {}
 
@@ -141,6 +140,6 @@ module.exports = class Teachers {
   }
 
   getBirthday(date) {
-    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+    return `${dayjs(date).format('DD.MM.YYYY')}`;
   }
 };
