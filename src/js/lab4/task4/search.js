@@ -74,7 +74,11 @@ module.exports = class Search {
         this.getValue().length
       )}, `;
     } else {
-      return `${element.name.first} ${element.name.last}, ${element.dob.age}, `;
+      return `${element.name.first} ${this.insertMark(
+        str,
+        str.search(this.getValue()),
+        this.getValue().length
+      )}, ${element.dob.age}, `;
     }
   }
 
