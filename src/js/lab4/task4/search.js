@@ -74,6 +74,7 @@ module.exports = class Search {
         this.getValue().length
       )}, `;
     } else {
+      let str = element.name.last;
       return `${element.name.first} ${this.insertMark(
         str,
         str.search(this.getValue()),
