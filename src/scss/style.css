@@ -1099,4 +1099,13 @@ body {
 .section-desc__item {
   margin-bottom: 20px;
 }
+
+.charts {
+  margin-top: 100px;
+}
+
+.charts__inner {
+  width: 100%;
+  min-height: 400px;
+}
 /*# sourceMappingURL=style.css.map */

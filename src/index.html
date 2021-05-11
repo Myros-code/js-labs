@@ -265,7 +265,6 @@
     </div>
     <!-----------------------/POPUP CONTAINER ----------------------->
 
-    <div class="" id='mapid2'></div>
     <div class="wrapper">
       <!----------------------HEADER ------------------------------->
       <header class="header">
@@ -290,11 +289,6 @@
               </button>
 
               <ul class="search-group__list">
-                <!-- <li class="search-group__item"> 
-                  <a href="#!" class="search-group__link">
-                    Noach Devis, 32
-                  </a>
-                </li> -->
               </ul>
 
             </div>
@@ -620,6 +614,11 @@
                   </tr>
                 </tbody>
                 </table>
+                <div class="charts">
+                  <div class="charts__inner">
+                    <canvas id="myChart"></canvas>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -712,10 +711,9 @@
       </footer>
       <!----------------------/FOOTER --------------------------------->
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="../build/js/app.js"></script>
+   
   </body>
 
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-  crossorigin=""></script>
 </html>

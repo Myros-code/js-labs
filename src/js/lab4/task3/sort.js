@@ -4,14 +4,14 @@ module.exports = class Sort {
     this.teachersPage = teachersPage;
   }
 
-  init(users) {
+  init(users, Allusers) {
     this.filterToggle = this.getFilterToggle();
     this.filterToggle.forEach((el) => {
       el.addEventListener("click", (event) => {
         let sortValue = event.target.dataset.sort;
         let sortArr = this.sort(sortValue, users);
-        this.teachersPage.renderStatistic(sortArr);
-        this.init(users);
+        this.teachersPage.renderStatistic(sortArr, sortValue, Allusers);
+        this.init(users, Allusers);
       });
     });
   }

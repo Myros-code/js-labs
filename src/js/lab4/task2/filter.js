@@ -1,3 +1,4 @@
+const _ = require("lodash");
 module.exports = class Filter {
   constructor(teachersPage, info_teacher_popup, sort) {
     this.favFilter = document.querySelector("#teacherFilter2");
@@ -54,16 +55,12 @@ module.exports = class Filter {
     if (country === "all" || country === "") {
       return arr;
     } else {
-      return arr.filter((el) => {
-        return el.location.country === country;
-      });
+      return _.filter(arr, { 'location': {'country': country}});
     }
   }
 
   filterAge(arr, min, max) {
-    return arr.filter((el) => {
-      return el.dob.age >= min && el.dob.age <= max;
-    });
+    return _.filter(arr, function(el) { return el.dob.age >= min && el.dob.age <= max; });
   }
 
   filterGender(arr, male, female) {

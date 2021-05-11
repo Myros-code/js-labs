@@ -1,6 +1,11 @@
-const dayjs = require('dayjs');
+const dayjs = require("dayjs");
+const _ = require("lodash");
+
 module.exports = class Teachers {
-  constructor() {}
+  constructor() {
+    this.chartCreate = false;
+    this.myChart = 0;
+  }
 
   render(users, favUsers) {
     const cardContainer = document.querySelector(".teachers-cards__inner");
@@ -65,7 +70,7 @@ module.exports = class Teachers {
     });
   }
 
-  renderStatistic(arr) {
+  renderStatistic(arr, value, Allusers) {
     const statisticTable = document.querySelector(".statistics-table__body");
     statisticTable.innerHTML = `<tr>
     <th class="statistics-table__filter-toggles" data-sort="name">Name</th>
@@ -82,17 +87,13 @@ module.exports = class Teachers {
     </tr>`;
       statisticTable.innerHTML += statisticItem;
     });
+
+    this.createChart(value, Allusers);
   }
 
   checkFavorite(element, favUsers) {
-    let res = favUsers.findIndex((el) => {
-      return el.id.value === element.id.value;
-    });
-    if (res === -1) {
-      return "";
-    } else {
-      return "teacher-card_favorite";
-    }
+    let res = _.findIndex(favUsers, function(el) { return el.id.value === element.id.value; });
+    return (res === -1) ? "" : "teacher-card_favorite";
   }
 
   checkImgClass(element) {
@@ -133,13 +134,239 @@ module.exports = class Teachers {
     }
   }
 
-  getFavTeachers(users) {
-    return users.filter((el) => {
-      return el["favorite"] === true;
-    });
+  getBirthday(date) {
+    return `${dayjs(date).format("DD.MM.YYYY")}`;
   }
 
-  getBirthday(date) {
-    return `${dayjs(date).format('DD.MM.YYYY')}`;
+  createChart(value, Allusers) {
+    if (!this.chartCreate) {
+      const ctx = document.getElementById("myChart").getContext("2d");
+      this.myChart = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: ["Mens", "Womens"],
+          datasets: [
+            {
+              label: "Number of men and women",
+              data: this.revealGender(Allusers),
+              backgroundColor: [
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 99, 132, 0.2)",
+              ],
+              borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+      this.chartCreate = true;
+    } else {
+      this.myChart.destroy();
+      const ctx = document.getElementById("myChart").getContext("2d");
+      this.createCurChart(value, ctx, Allusers);
+    }
+  }
+
+  createCurChart(value, ctx, Allusers) {
+    switch (value) {
+      case "name":
+        this.myChart = new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: ["Mens", "Womens"],
+            datasets: [
+              {
+                label: "Number of men and women",
+                data: this.revealGender(Allusers),
+                backgroundColor: [
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 99, 132, 0.2)",
+                ],
+                borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+        break;
+      case "age":
+        let labelsA = this.revealAge(Allusers)[0];
+        let numDataA = this.revealAge(Allusers)[1];
+        this.myChart = new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: labelsA,
+            datasets: [
+              {
+                label: "Users age",
+                data: numDataA,
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+        break;
+      case "b_date":
+        let labelsD = this.revealAge(Allusers)[0];
+        let numDataD = this.revealAge(Allusers)[1];
+        this.myChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labelsD,
+            datasets: [
+              {
+                label: "Users age",
+                data: numDataD,
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+        break;
+      case "country":
+        let labels = this.revealCountry(Allusers)[0];
+        let numData = this.revealCountry(Allusers)[1];
+        this.myChart = new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Number of different countries",
+                data: numData,
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+        break;
+    }
+  }
+
+  revealGender(Allusers) {
+    let mens = _.filter(Allusers, { gender: "male" });
+    let womens = _.filter(Allusers, { gender: "female" });
+    return [Number(mens.length), Number(womens.length)];
+  }
+
+  revealAge(Allusers) {
+    function ageCount(el) {
+      return el.length;
+    }
+    let dobs = _.map(Allusers, "dob");
+    let agesAll = _.map(dobs, "age");
+    let ages = _.uniq(agesAll).sort();
+    let agesCount = _.reduce(
+      agesAll.sort(),
+      function (result, value, key) {
+        (result[value] || (result[value] = [])).push(key);
+        return result;
+      },
+      {}
+    );
+    let ageCountNum = _.map(agesCount, ageCount);
+    return [ages, ageCountNum];
+  }
+
+  revealCountry(Allusers) {
+    function countryCount(el) {
+      return el.length;
+    }
+    let locations = _.map(Allusers, "location");
+    let countriesAll = _.map(locations, "country");
+    let countries = _.uniq(countriesAll).sort();
+    let countriesCount = _.reduce(
+      countriesAll.sort(),
+      function (result, value, key) {
+        (result[value] || (result[value] = [])).push(key);
+        return result;
+      },
+      {}
+    );
+    let countriesCountNum = _.map(countriesCount, countryCount);
+    return [countries, countriesCountNum];
   }
 };

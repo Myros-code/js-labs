@@ -74,7 +74,6 @@ class App {
 
   renderChunk(num) {
     let chunk = this.usersAll.slice((num - 1) * 10, num * 10);
-
     this.addPopup = new AddPopup(
       "addTeacher",
       this.teachersPage,
@@ -86,10 +85,9 @@ class App {
       this.favUsers,
       this.usersAll
     );
-    console.log(this.usersAll);
     this.teachersPage.render(chunk, this.favUsers);
-    this.teachersPage.renderStatistic(chunk);
-    this.mySort.init(chunk);
+    this.teachersPage.renderStatistic(chunk, "name", this.usersAll);
+    this.mySort.init(chunk, this.usersAll);
     this.info_teacher_popup.listen(chunk);
     this.filter.clickListener(chunk, this.favUsers);
   }

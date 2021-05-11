@@ -216,3 +216,12 @@ body {
     }
   }
 }
+
+
+.charts{
+  margin-top: 100px;
+  &__inner{
+    width: 100%;
+    min-height: 400px;
+  }
+}

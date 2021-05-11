@@ -85,13 +85,10 @@ module.exports = class Search {
         this.info_popup.openContainer();
         let cardId = event.target.dataset.card;
         let elem = this.info_popup.getElem(users, cardId);
-
-        // see, if container open
         if (this.info_popup.container.classList.contains("open")) {
           this.info_popup.open();
           this.info_popup.renderData(elem);
           this.info_popup.checkFavorite(elem, favUsers);
-
           this.info_popup.favoriteBtn.onclick = () => {
             this.info_popup.toggleFavorite(elem, favUsers);
             this.info_popup.checkFavorite(elem, favUsers);

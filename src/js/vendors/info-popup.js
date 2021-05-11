@@ -22,12 +22,10 @@ module.exports = class infoPopup extends Popup {
     this.teachersPage = teachersPage;
     this.favUsers = favUsers;
 
-    // clouse on click "clouse button"
     this.clouseBtn.addEventListener("click", () => {
       this.clouse();
     });
-
-    // clouse on click container
+    
     this.container.addEventListener("click", (event) => {
       if (event.target.classList.contains("popup-container")) {
         this.clouse();
@@ -46,21 +44,16 @@ module.exports = class infoPopup extends Popup {
     this.teacherAge.innerHTML = elem.dob.age;
     this.teacherMail.innerHTML = elem.email;
     this.getMap(elem);
-    // let mymap = L.map('mapid').setView([51.505, -0.09], 13);
   }
 
   listen(users) {
     this.trigers = this.getTriggers();
-    // foreach for all popup triggers
     this.trigers.forEach((el) => {
-      // even trigger listen "click event"
       el.addEventListener("click", (event) => {
         this.openContainer();
         let card = event.target.closest(".popup-trigger");
         let cardId = card.id;
         let elem = this.getElem(users, cardId);
-
-        // see, if container open
         if (this.container.classList.contains("open")) {
           this.open();
           this.renderData(elem);
