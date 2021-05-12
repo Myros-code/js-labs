@@ -4,6 +4,7 @@ import splideCarousel from './splide-carousel';
 
 const dayjs = require('dayjs');
 const L = require('leaflet');
+const _ = require('lodash');
 
 module.exports = class infoPopup extends Popup {
   constructor(id, teachersPage, favUsers) {
@@ -81,6 +82,7 @@ module.exports = class infoPopup extends Popup {
     const card = document.getElementById(elem.id.value);
     if (res === -1) {
       users.push(elem);
+      
       this.popup.classList.add('popup_teaher-info_teacher-favorite');
       if (card === null) {
       } else {
@@ -89,13 +91,11 @@ module.exports = class infoPopup extends Popup {
     } else {
       users.splice(res, 1);
       this.popup.classList.remove('popup_teaher-info_teacher-favorite');
-
       if (card === null) {
       } else {
         card.classList.remove('teacher-card_favorite');
       }
     }
-
     this.teachersPage.renderFavorite(users);
     splideCarousel();
   }
@@ -178,4 +178,5 @@ module.exports = class infoPopup extends Popup {
   getGender(elem) {
     return elem.gender === 'male' ? 'M' : 'F';
   }
+
 };

@@ -293,6 +293,7 @@
 .teacher-card__img {
   max-height: 112px;
   max-width: 112px;
+  border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
   -webkit-transition: -webkit-transform 0.3s ease-out;

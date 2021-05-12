@@ -141,7 +141,6 @@ class App {
     this.pagBox.innerHTML = pagination;
     this.pagBtns = document.querySelectorAll('.pag');
     const maxChunkNum = Math.ceil(this.usersAll.length / 10);
-    console.log(this.usersAll);
     this.changeChunk(maxChunkNum);
   }
 
