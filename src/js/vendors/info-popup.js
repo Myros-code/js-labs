@@ -25,7 +25,7 @@ module.exports = class infoPopup extends Popup {
     this.clouseBtn.addEventListener("click", () => {
       this.clouse();
     });
-    
+
     this.container.addEventListener("click", (event) => {
       if (event.target.classList.contains("popup-container")) {
         this.clouse();
@@ -47,9 +47,9 @@ module.exports = class infoPopup extends Popup {
   }
 
   listen(users) {
-    this.trigers = this.getTriggers();
+    this.trigers = document.querySelectorAll(".popup-trigger");
     this.trigers.forEach((el) => {
-      el.addEventListener("click", (event) => {
+      el.onclick = (event) => {
         this.openContainer();
         let card = event.target.closest(".popup-trigger");
         let cardId = card.id;
@@ -63,7 +63,7 @@ module.exports = class infoPopup extends Popup {
             this.checkFavorite(elem, this.favUsers);
           };
         }
-      });
+      };
     });
   }
 
@@ -182,5 +182,9 @@ module.exports = class infoPopup extends Popup {
 
   getGender(elem) {
     return elem.gender === "male" ? "M" : "F";
+  }
+
+  getTriggers() {
+    return document.querySelectorAll(".popup-trigger");
   }
 };

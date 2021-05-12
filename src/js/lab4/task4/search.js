@@ -97,7 +97,7 @@ module.exports = class Search {
           this.info_popup.favoriteBtn.onclick = () => {
             this.info_popup.toggleFavorite(elem, favUsers);
             this.info_popup.checkFavorite(elem, favUsers);
-            this.info_popup.listen(this.teachersPage);
+            this.info_popup.listen(users);
           };
         }
       });

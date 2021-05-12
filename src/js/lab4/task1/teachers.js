@@ -49,7 +49,7 @@ module.exports = class Teachers {
         <li class="splide__slide">
             <div class="teacher-card teacher-card_favorite ${this.checkImgClass(
               element
-            )}" data-card="${element.id.value}">
+            )} popup-trigger" data-card="${element.id.value}">
                 <img src="./images/star.svg" alt="star" class="teacher-card_favorite__star-img"/>
                 <div class="teacher-card__inner">
                     <div class="teacher-card__img-block">
@@ -141,6 +141,8 @@ module.exports = class Teachers {
   createChart(value, Allusers) {
     if (!this.chartCreate) {
       const ctx = document.getElementById("myChart").getContext("2d");
+      ctx.canvas.parentNode.style.height = '700px';
+      ctx.canvas.parentNode.style.width = '700px';
       this.myChart = new Chart(ctx, {
         type: "pie",
         data: {
@@ -170,6 +172,8 @@ module.exports = class Teachers {
     } else {
       this.myChart.destroy();
       const ctx = document.getElementById("myChart").getContext("2d");
+      ctx.canvas.parentNode.style.height = '700px';
+      ctx.canvas.parentNode.style.width = '700px';
       this.createCurChart(value, ctx, Allusers);
     }
   }

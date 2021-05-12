@@ -41,7 +41,6 @@ class App {
     this.pagBtns = document.querySelectorAll(".pag");
     this.pagBox = document.querySelector(".pagination__inner");
     this.changeChunk();
-
     splideCarousel();
   }
 
@@ -89,7 +88,7 @@ class App {
     this.teachersPage.renderStatistic(chunk, "name", this.usersAll);
     this.mySort.init(chunk, this.usersAll);
     this.info_teacher_popup.listen(chunk);
-    this.filter.clickListener(chunk, this.favUsers);
+    this.filter.clickListener(chunk, this.favUsers, this.usersAll);
   }
 
   changeChunk() {

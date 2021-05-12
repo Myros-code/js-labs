@@ -15,7 +15,8 @@ module.exports = class AddPopup extends Popup {
   ) {
     super(id);
     this.trigers = this.getTriggers();
-    this.splideCarousel = splideCarousel;
+
+    // BASIC DOM VARIABLES
     this.newTeachName = document.querySelector("#teacherName");
     this.newTeachCountry = document.querySelector("#teacherCountry");
     this.newTeachCity = document.querySelector("#teacherCity");
@@ -28,11 +29,16 @@ module.exports = class AddPopup extends Popup {
     this.addBtn = document.querySelector("#addTeacherBtn");
     this.pagBtns = document.querySelectorAll(".pagination__item");
     this.newTeachGender = this.getGender();
+
+    // MAIN CLASSES OBJECTS, THAT MANIPULATE PAGE
     this.teachersPage = teachersPage;
     this.info_teacher_popup = info_teacher_popup;
     this.filter = filter;
     this.mySort = mySort;
     this.mySearch = mySearch;
+    this.splideCarousel = splideCarousel;
+
+    // FUNCTION THAT ADD NEW USER ON PAGE
     this.add(users, favUsers, allUsers);
 
     // clouse on click "clouse button"
@@ -46,65 +52,39 @@ module.exports = class AddPopup extends Popup {
         this.clouse();
       }
     };
+
   }
 
   add(users, favUsers, allUsers) {
     this.addBtn.onclick = (event) => {
       this.pagBtns = document.querySelectorAll(".pagination__item");
       event.preventDefault();
-      let newTeacher = {
-        id: {},
-        name: {},
-        dob: {},
-        picture: {},
-        location: {},
-      };
-      newTeacher.id.value = this.giveId(users);
-      newTeacher["bg_color"] = this.newTeachBgColor.value;
-      newTeacher["gender"] = this.getGender();
-      let name = this.newTeachName.value.trim().split(" ");
-      newTeacher.name.first = name[0];
-      newTeacher.name.last = name[1];
-      newTeacher.location.country = this.newTeachCountry.value.trim();
-      newTeacher.location.city = this.newTeachCity.value.trim();
-      newTeacher.email = this.newTeachEmail.value.trim();
-      newTeacher.phone = this.newTeachNumber.value.trim();
-      newTeacher.dob.age = this.getAge();
-      newTeacher.dob.date = this.getBirthdate();
-      allUsers.push(newTeacher);
+      // PUSH NEW USER OBJ TO ALL USERS ARRAY
+      allUsers.push(this.createNewTeaher(allUsers));
+
       if (
         this.pagBtns[this.pagBtns.length - 1].classList.contains(
           "pagination__item_current"
         )
       ) {
         let lastChunk = allUsers.slice((6 - 1) * 10, 6 * 10);
-        this.teachersPage.render(lastChunk, favUsers);
-        this.teachersPage.renderStatistic(lastChunk);
-        this.info_teacher_popup.listen(lastChunk);
-        this.filter.filter(lastChunk);
-        this.filter.clickListener(lastChunk, favUsers);
-        this.mySort.init(lastChunk);
+        this.renderNewData(lastChunk, favUsers, allUsers, "name");
       } else {
-        this.teachersPage.render(users, favUsers);
-        this.teachersPage.renderStatistic(users);
-        this.info_teacher_popup.listen(users);
-        this.filter.filter(users);
-        this.filter.clickListener(users, favUsers);
-        this.mySort.init(users);
+        this.renderNewData(users, favUsers, allUsers,  "name");
       }
 
-      this.teachersPage.renderFavorite(favUsers);
-      this.mySearch.init(allUsers, favUsers);
       this.splideCarousel();
       this.clouse();
     };
   }
 
+  // GIVE RANDOM ID VALUE TO USER
   giveId(users) {
     let id = this.getRandomInt(1, 10000);
     return this.checkSameId(id, users);
   }
 
+  // CHECK, WHETER EXISTING IDS WERE GENERATED
   checkSameId(id, users) {
     if (
       users.findIndex((elem) => {
@@ -117,6 +97,7 @@ module.exports = class AddPopup extends Popup {
     }
   }
 
+  // COUNT THE YEAR FROM FROM
   getAge() {
     let date = this.newTeachDateBirth.value.trim();
     let birthYear = date.slice(0, 4);
@@ -125,7 +106,9 @@ module.exports = class AddPopup extends Popup {
     return age;
   }
 
+  // GET BIRTHDAY DATE VALUE FROM FORM
   getBirthdate() {
+    // DATE FORMAT : YYYY.MM.DD
     let date = this.newTeachDateBirth.value.trim();
     let birthYear = date.slice(0, 4);
     let birthMonth = date.slice(5, 7);
@@ -134,13 +117,57 @@ module.exports = class AddPopup extends Popup {
     return birthDate;
   }
 
+  // FUNCTION FOR GENERATE ID RANDOM NUMBER
   getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+    return Math.floor(Math.random() * (max - min)) + min;
   }
 
+  // GET GENDER VALUE FROM FORM
   getGender() {
     return this.newTeachFemale.checked ? "female" : "male";
   }
+
+  // RENDER NEW DATA FOR PAGE
+  renderNewData(users, favUsers, allUsers, chartsValue){
+    this.teachersPage.render(users, favUsers);
+    this.teachersPage.renderStatistic(users, chartsValue, allUsers);
+    this.info_teacher_popup.listen(users);
+    this.filter.filter(users);
+    this.filter.clickListener(users, favUsers, allUsers);
+    this.mySort.init(users, allUsers);
+    this.teachersPage.renderFavorite(favUsers);
+    this.mySearch.init(allUsers, favUsers);
+  }
+
+  // GET NAME VALUE FROM FORM
+  getName(){
+    return this.newTeachName.value.trim().split(" ");
+  }
+
+ // CREATE NEW TEACHER OBJ 
+  createNewTeaher(allUsers){
+    // NEW TEACHER OBJ SHABLON
+    let newTeacher = {
+      id: {},
+      name: {},
+      dob: {},
+      picture: {},
+      location: {},
+    };
+    newTeacher.id.value = this.giveId(allUsers);
+    newTeacher["bg_color"] = this.newTeachBgColor.value;
+    newTeacher["gender"] = this.getGender();
+    newTeacher.name.first = this.getName()[0];
+    newTeacher.name.last = this.getName()[1];
+    newTeacher.location.country = this.newTeachCountry.value.trim();
+    newTeacher.location.city = this.newTeachCity.value.trim();
+    newTeacher.email = this.newTeachEmail.value.trim();
+    newTeacher.phone = this.newTeachNumber.value.trim();
+    newTeacher.dob.age = this.getAge();
+    newTeacher.dob.date = this.getBirthdate();
+    return newTeacher;
+  }
+
 };

@@ -79,21 +79,21 @@ module.exports = class Filter {
     return this.filterUsers;
   }
 
-  clickListener(users, favUsers) {
+  clickListener(users, favUsers, Allusers) {
     this.filterBtn.onclick = () => {
       this.filter(users);
       this.teachersPage.render(this.filterUsers, favUsers);
-      this.teachersPage.renderStatistic(this.filterUsers);
+      this.teachersPage.renderStatistic(this.filterUsers, "name", Allusers);
       this.info_teacher_popup.listen(this.filterUsers);
-      this.sort.init(this.filterUsers);
+      this.sort.init(this.filterUsers, Allusers);
     };
 
     this.remFilterBtn.onclick = () => {
       this.favFilter.checked = false;
       this.teachersPage.render(users, favUsers);
-      this.teachersPage.renderStatistic(users);
+      this.teachersPage.renderStatistic(users, "name", Allusers);
       this.info_teacher_popup.listen(users);
-      this.sort.init(users);
+      this.sort.init(users, Allusers);
     };
   }
 };
