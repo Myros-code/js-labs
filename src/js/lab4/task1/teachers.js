@@ -1,5 +1,5 @@
-const dayjs = require("dayjs");
-const _ = require("lodash");
+const dayjs = require('dayjs');
+const _ = require('lodash');
 
 module.exports = class Teachers {
   constructor() {
@@ -8,14 +8,14 @@ module.exports = class Teachers {
   }
 
   render(users, favUsers) {
-    const cardContainer = document.querySelector(".teachers-cards__inner");
-    cardContainer.innerHTML = "";
+    const cardContainer = document.querySelector('.teachers-cards__inner');
+    cardContainer.innerHTML = '';
     users.forEach((element) => {
-      let card = `<div
+      const card = `<div
     class="teacher-card ${this.checkFavorite(
-      element,
-      favUsers
-    )} ${this.checkImgClass(element)} popup-trigger" id="${element.id.value}"
+    element,
+    favUsers,
+  )} ${this.checkImgClass(element)} popup-trigger" id="${element.id.value}"
     data-popup="teacherInfo"
   >
     <img
@@ -29,8 +29,8 @@ module.exports = class Teachers {
       </div>
       <div class="teacher-card__info">
         <h2 class="teacher-card__name">${element.name.first} ${
-        element.name.last
-      }</h2>
+  element.name.last
+}</h2>
         <span class="teacher-card__location">${element.location.country}</span>
       </div>
     </div>
@@ -41,15 +41,15 @@ module.exports = class Teachers {
   }
 
   renderFavorite(users) {
-    const favTeachList = document.querySelector("#favTeachers");
+    const favTeachList = document.querySelector('#favTeachers');
     const favTeachersArr = users;
-    favTeachList.innerHTML = "";
+    favTeachList.innerHTML = '';
     favTeachersArr.forEach((element) => {
-      let card = `
+      const card = `
         <li class="splide__slide">
             <div class="teacher-card teacher-card_favorite ${this.checkImgClass(
-              element
-            )} popup-trigger" data-card="${element.id.value}">
+    element,
+  )} popup-trigger" data-card="${element.id.value}">
                 <img src="./images/star.svg" alt="star" class="teacher-card_favorite__star-img"/>
                 <div class="teacher-card__inner">
                     <div class="teacher-card__img-block">
@@ -57,11 +57,11 @@ module.exports = class Teachers {
                     </div>
                     <div class="teacher-card__info">
                     <h2 class="teacher-card__name">${element.name.first} ${
-        element.name.last
-      }</h2>
+  element.name.last
+}</h2>
                     <span class="teacher-card__location">${
-                      element.location.country
-                    }</span>
+  element.location.country
+}</span>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@ module.exports = class Teachers {
   }
 
   renderStatistic(arr, value, Allusers) {
-    const statisticTable = document.querySelector(".statistics-table__body");
+    const statisticTable = document.querySelector('.statistics-table__body');
     statisticTable.innerHTML = `<tr>
     <th class="statistics-table__filter-toggles" data-sort="name">Name</th>
     <th class="statistics-table__filter-toggles" data-sort="age">Age</th>
@@ -79,7 +79,7 @@ module.exports = class Teachers {
     <th class="statistics-table__filter-toggles" data-sort="country">Country</th>
     </tr>`;
     arr.forEach((element) => {
-      let statisticItem = `<tr>
+      const statisticItem = `<tr>
       <td>${element.name.first} ${element.name.last}</td>
       <td>${element.dob.age}</td>
       <td>${this.getBirthday(new Date(element.dob.date))}</td>
@@ -92,70 +92,68 @@ module.exports = class Teachers {
   }
 
   checkFavorite(element, favUsers) {
-    let res = _.findIndex(favUsers, function(el) { return el.id.value === element.id.value; });
-    return (res === -1) ? "" : "teacher-card_favorite";
+    const res = _.findIndex(favUsers, (el) => el.id.value === element.id.value);
+    return (res === -1) ? '' : 'teacher-card_favorite';
   }
 
   checkImgClass(element) {
     if (
-      !("large" in element.picture) &&
-      !("medium" in element.picture) &&
-      !("thumbnail" in element.picture)
+      !('large' in element.picture)
+      && !('medium' in element.picture)
+      && !('thumbnail' in element.picture)
     ) {
-      return "teacher-card_without-img";
-    } else {
-      return "";
+      return 'teacher-card_without-img';
     }
+    return '';
   }
 
   checkImgPhoto(element) {
     if (
-      !("large" in element.picture) &&
-      !("medium" in element.picture) &&
-      !("thumbnail" in element.picture)
+      !('large' in element.picture)
+      && !('medium' in element.picture)
+      && !('thumbnail' in element.picture)
     ) {
-      let firstLetterName = element.name.first.slice(0, 1);
-      let secondLetterName = element.name.last.slice(0, 1);
+      const firstLetterName = element.name.first.slice(0, 1);
+      const secondLetterName = element.name.last.slice(0, 1);
       return `<span class="teacher-card__initials">${firstLetterName}.${secondLetterName}</span>`;
-    } else {
-      return `<img
+    }
+    return `<img
           src='${
-            element.picture.large
-              ? element.picture.large
-              : element.picture.medium
-              ? element.picture.medium
-              : element.picture.thumbnail
-          }'
+  element.picture.large
+    ? element.picture.large
+    : element.picture.medium
+      ? element.picture.medium
+      : element.picture.thumbnail
+}'
           height="200"
           width="auto"
           alt="teacher"
           class="teacher-card__img"
         />`;
-    }
   }
 
   getBirthday(date) {
-    return `${dayjs(date).format("DD.MM.YYYY")}`;
+    return `${dayjs(date).format('DD.MM.YYYY')}`;
   }
 
   createChart(value, Allusers) {
     if (!this.chartCreate) {
-      const ctx = document.getElementById("myChart").getContext("2d");
+      const ctx = document.getElementById('myChart').getContext('2d');
       ctx.canvas.parentNode.style.height = '700px';
       ctx.canvas.parentNode.style.width = '700px';
       this.myChart = new Chart(ctx, {
-        type: "pie",
+        type: 'pie',
         data: {
-          labels: ["Mens", "Womens"],
+          labels: ['Mens', 'Womens'],
           datasets: [
             {
-              label: "Number of men and women",
+              label: 'Number of men and women',
               data: this.revealGender(Allusers),
               backgroundColor: [
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 99, 132, 0.2)",
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
               ],
-              borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+              borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
               borderWidth: 1,
             },
           ],
@@ -171,7 +169,7 @@ module.exports = class Teachers {
       this.chartCreate = true;
     } else {
       this.myChart.destroy();
-      const ctx = document.getElementById("myChart").getContext("2d");
+      const ctx = document.getElementById('myChart').getContext('2d');
       ctx.canvas.parentNode.style.height = '700px';
       ctx.canvas.parentNode.style.width = '700px';
       this.createCurChart(value, ctx, Allusers);
@@ -180,20 +178,20 @@ module.exports = class Teachers {
 
   createCurChart(value, ctx, Allusers) {
     switch (value) {
-      case "name":
+      case 'name':
         this.myChart = new Chart(ctx, {
-          type: "pie",
+          type: 'pie',
           data: {
-            labels: ["Mens", "Womens"],
+            labels: ['Mens', 'Womens'],
             datasets: [
               {
-                label: "Number of men and women",
+                label: 'Number of men and women',
                 data: this.revealGender(Allusers),
                 backgroundColor: [
-                  "rgba(54, 162, 235, 0.2)",
-                  "rgba(255, 99, 132, 0.2)",
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 99, 132, 0.2)',
                 ],
-                borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
                 borderWidth: 1,
               },
             ],
@@ -207,32 +205,32 @@ module.exports = class Teachers {
           },
         });
         break;
-      case "age":
-        let labelsA = this.revealAge(Allusers)[0];
-        let numDataA = this.revealAge(Allusers)[1];
+      case 'age':
+        const labelsA = this.revealAge(Allusers)[0];
+        const numDataA = this.revealAge(Allusers)[1];
         this.myChart = new Chart(ctx, {
-          type: "pie",
+          type: 'pie',
           data: {
             labels: labelsA,
             datasets: [
               {
-                label: "Users age",
+                label: 'Users age',
                 data: numDataA,
                 backgroundColor: [
-                  "rgba(255, 99, 132, 0.2)",
-                  "rgba(54, 162, 235, 0.2)",
-                  "rgba(255, 206, 86, 0.2)",
-                  "rgba(75, 192, 192, 0.2)",
-                  "rgba(153, 102, 255, 0.2)",
-                  "rgba(255, 159, 64, 0.2)",
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
                 ],
                 borderColor: [
-                  "rgba(255, 99, 132, 1)",
-                  "rgba(54, 162, 235, 1)",
-                  "rgba(255, 206, 86, 1)",
-                  "rgba(75, 192, 192, 1)",
-                  "rgba(153, 102, 255, 1)",
-                  "rgba(255, 159, 64, 1)",
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)',
                 ],
                 borderWidth: 1,
               },
@@ -247,32 +245,32 @@ module.exports = class Teachers {
           },
         });
         break;
-      case "b_date":
-        let labelsD = this.revealAge(Allusers)[0];
-        let numDataD = this.revealAge(Allusers)[1];
+      case 'b_date':
+        const labelsD = this.revealAge(Allusers)[0];
+        const numDataD = this.revealAge(Allusers)[1];
         this.myChart = new Chart(ctx, {
-          type: "bar",
+          type: 'bar',
           data: {
             labels: labelsD,
             datasets: [
               {
-                label: "Users age",
+                label: 'Users age',
                 data: numDataD,
                 backgroundColor: [
-                  "rgba(255, 99, 132, 0.2)",
-                  "rgba(54, 162, 235, 0.2)",
-                  "rgba(255, 206, 86, 0.2)",
-                  "rgba(75, 192, 192, 0.2)",
-                  "rgba(153, 102, 255, 0.2)",
-                  "rgba(255, 159, 64, 0.2)",
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
                 ],
                 borderColor: [
-                  "rgba(255, 99, 132, 1)",
-                  "rgba(54, 162, 235, 1)",
-                  "rgba(255, 206, 86, 1)",
-                  "rgba(75, 192, 192, 1)",
-                  "rgba(153, 102, 255, 1)",
-                  "rgba(255, 159, 64, 1)",
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)',
                 ],
                 borderWidth: 1,
               },
@@ -287,32 +285,32 @@ module.exports = class Teachers {
           },
         });
         break;
-      case "country":
-        let labels = this.revealCountry(Allusers)[0];
-        let numData = this.revealCountry(Allusers)[1];
+      case 'country':
+        const labels = this.revealCountry(Allusers)[0];
+        const numData = this.revealCountry(Allusers)[1];
         this.myChart = new Chart(ctx, {
-          type: "pie",
+          type: 'pie',
           data: {
-            labels: labels,
+            labels,
             datasets: [
               {
-                label: "Number of different countries",
+                label: 'Number of different countries',
                 data: numData,
                 backgroundColor: [
-                  "rgba(255, 99, 132, 0.2)",
-                  "rgba(54, 162, 235, 0.2)",
-                  "rgba(255, 206, 86, 0.2)",
-                  "rgba(75, 192, 192, 0.2)",
-                  "rgba(153, 102, 255, 0.2)",
-                  "rgba(255, 159, 64, 0.2)",
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
                 ],
                 borderColor: [
-                  "rgba(255, 99, 132, 1)",
-                  "rgba(54, 162, 235, 1)",
-                  "rgba(255, 206, 86, 1)",
-                  "rgba(75, 192, 192, 1)",
-                  "rgba(153, 102, 255, 1)",
-                  "rgba(255, 159, 64, 1)",
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)',
                 ],
                 borderWidth: 1,
               },
@@ -331,8 +329,8 @@ module.exports = class Teachers {
   }
 
   revealGender(Allusers) {
-    let mens = _.filter(Allusers, { gender: "male" });
-    let womens = _.filter(Allusers, { gender: "female" });
+    const mens = _.filter(Allusers, { gender: 'male' });
+    const womens = _.filter(Allusers, { gender: 'female' });
     return [Number(mens.length), Number(womens.length)];
   }
 
@@ -340,18 +338,18 @@ module.exports = class Teachers {
     function ageCount(el) {
       return el.length;
     }
-    let dobs = _.map(Allusers, "dob");
-    let agesAll = _.map(dobs, "age");
-    let ages = _.uniq(agesAll).sort();
-    let agesCount = _.reduce(
+    const dobs = _.map(Allusers, 'dob');
+    const agesAll = _.map(dobs, 'age');
+    const ages = _.uniq(agesAll).sort();
+    const agesCount = _.reduce(
       agesAll.sort(),
-      function (result, value, key) {
+      (result, value, key) => {
         (result[value] || (result[value] = [])).push(key);
         return result;
       },
-      {}
+      {},
     );
-    let ageCountNum = _.map(agesCount, ageCount);
+    const ageCountNum = _.map(agesCount, ageCount);
     return [ages, ageCountNum];
   }
 
@@ -359,18 +357,18 @@ module.exports = class Teachers {
     function countryCount(el) {
       return el.length;
     }
-    let locations = _.map(Allusers, "location");
-    let countriesAll = _.map(locations, "country");
-    let countries = _.uniq(countriesAll).sort();
-    let countriesCount = _.reduce(
+    const locations = _.map(Allusers, 'location');
+    const countriesAll = _.map(locations, 'country');
+    const countries = _.uniq(countriesAll).sort();
+    const countriesCount = _.reduce(
       countriesAll.sort(),
-      function (result, value, key) {
+      (result, value, key) => {
         (result[value] || (result[value] = [])).push(key);
         return result;
       },
-      {}
+      {},
     );
-    let countriesCountNum = _.map(countriesCount, countryCount);
+    const countriesCountNum = _.map(countriesCount, countryCount);
     return [countries, countriesCountNum];
   }
 };

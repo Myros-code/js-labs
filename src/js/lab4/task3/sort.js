@@ -7,9 +7,9 @@ module.exports = class Sort {
   init(users, Allusers) {
     this.filterToggle = this.getFilterToggle();
     this.filterToggle.forEach((el) => {
-      el.addEventListener("click", (event) => {
-        let sortValue = event.target.dataset.sort;
-        let sortArr = this.sort(sortValue, users);
+      el.addEventListener('click', (event) => {
+        const sortValue = event.target.dataset.sort;
+        const sortArr = this.sort(sortValue, users);
         this.teachersPage.renderStatistic(sortArr, sortValue, Allusers);
         this.init(users, Allusers);
       });
@@ -17,10 +17,10 @@ module.exports = class Sort {
   }
 
   sort(value, users) {
-    let sortUsers = users.slice();
+    const sortUsers = users.slice();
     sortUsers.sort((a, b) => {
       switch (value) {
-        case "name":
+        case 'name':
           if (
             `${a.name.first} ${a.name.last}` < `${b.name.first} ${b.name.last}`
           ) {
@@ -33,10 +33,10 @@ module.exports = class Sort {
           }
           return 0;
           break;
-        case "age":
+        case 'age':
           return b.dob.age - a.dob.age;
           break;
-        case "b_date":
+        case 'b_date':
           if (
             new Date(a.dob.date) < new Date(b.dob.date)
           ) {
@@ -49,7 +49,7 @@ module.exports = class Sort {
           }
           return 0;
           break;
-        case "country":
+        case 'country':
           if (a.location.country < b.location.country) {
             return -1;
           }
@@ -64,6 +64,6 @@ module.exports = class Sort {
   }
 
   getFilterToggle() {
-    return document.querySelectorAll(".statistics-table__filter-toggles");
+    return document.querySelectorAll('.statistics-table__filter-toggles');
   }
 };
